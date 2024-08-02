@@ -4,8 +4,8 @@ import json
 from PIL import Image
 
 # Path to the JSON file
-ITEMS_JSON_PATH = r'C:\PAComponents\items.json'
-IMAGES_DIR = r'C:\PAComponents\images'
+ITEMS_JSON_PATH = r'items.json'
+IMAGES_DIR = r'images'
 
 # Ensure the images directory exists
 if not os.path.exists(IMAGES_DIR):

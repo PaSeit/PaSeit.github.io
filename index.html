@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerApps</title>
+    <title>PowerApps Gallery</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -144,83 +144,49 @@
         </div>
     </div>
     <script>
-        const galleryData = [
-    {
-        "title": "Button",
-        "image": "images/image2.jpeg",
-        "description": "A simple button with a hover effect.",
-        "yamlCode": "Test",
-        "category": "Buttons"
-    }
-];
-
-        function toggleSubcategories(element) {
-            element.classList.toggle('open');
-            const subcategories = element.nextElementSibling;
-            if (subcategories && subcategories.classList.contains('subcategories')) {
-                subcategories.style.display = subcategories.style.display === 'block' ? 'none' : 'block';
-            }
+        async function fetchGalleryData() {
+            const response = await fetch('items.json'); // Path to your JSON file in the repository
+            const data = await response.json();
+            return data;
         }
 
-        function copyToClipboard(yamlCode) {
-            const tempTextarea = document.createElement("textarea");
-            tempTextarea.value = yamlCode;
-            document.body.appendChild(tempTextarea);
-            tempTextarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempTextarea);
-            alert("Copied to clipboard");
-        }
-
-        function loadGallery(category = '', searchQuery = '') {
+        function loadGallery(items) {
             const gallery = document.getElementById("gallery");
             gallery.innerHTML = "";
-            galleryData
-                .filter(item => (category === 'All' || category === '' || item.category === category) &&
-                                (searchQuery === '' || item.title.toLowerCase().includes(searchQuery.toLowerCase())))
-                .forEach(item => {
-                    const galleryItem = document.createElement("div");
-                    galleryItem.className = "gallery-item";
-                    
-                    const img = document.createElement("img");
-                    img.src = item.image;
-                    img.alt = item.title;
-                    
-                    const title = document.createElement("h3");
-                    title.textContent = item.title;
-                    
-                    const description = document.createElement("p");
-                    description.textContent = item.description;
-                    
-                    const button = document.createElement("button");
-                    button.className = "copy-btn";
-                    button.textContent = "Copy to Clipboard";
-                    button.onclick = () => copyToClipboard(item.yamlCode);
-                    
-                    galleryItem.appendChild(img);
-                    galleryItem.appendChild(title);
-                    galleryItem.appendChild(description);
-                    galleryItem.appendChild(button);
-                    
-                    gallery.appendChild(galleryItem);
-                });
+            items.forEach(item => {
+                const galleryItem = document.createElement("div");
+                galleryItem.className = "gallery-item";
+                
+                const img = document.createElement("img");
+                img.src = item.image;
+                img.alt = item.title;
+                
+                const title = document.createElement("h3");
+                title.textContent = item.title;
+                
+                const description = document.createElement("p");
+                description.textContent = item.description;
+                
+                const button = document.createElement("button");
+                button.className = "copy-btn";
+                button.textContent = "Copy to Clipboard";
+                button.onclick = () => copyToClipboard(item.yamlCode);
+                
+                galleryItem.appendChild(img);
+                galleryItem.appendChild(title);
+                galleryItem.appendChild(description);
+                galleryItem.appendChild(button);
+                
+                gallery.appendChild(galleryItem);
+            });
         }
 
-        function filterGallery(category) {
-            const categories = document.querySelectorAll('.category, .subcategories a');
-            categories.forEach(cat => cat.classList.remove('active'));
-            const activeCategory = [...categories].find(cat => cat.textContent.trim() === category);
-            if (activeCategory) activeCategory.classList.add('active');
-            const searchInput = document.getElementById("searchInput").value;
-            loadGallery(category, searchInput);
+        async function initGallery() {
+            const items = await fetchGalleryData();
+            loadGallery(items);
         }
 
-        document.getElementById("searchInput").addEventListener("input", function() {
-            const activeCategory = document.querySelector('.category.active')?.textContent.trim() || 'All';
-            loadGallery(activeCategory, this.value);
-        });
-
-        document.addEventListener("DOMContentLoaded", () => loadGallery('All'));
+        document.addEventListener("DOMContentLoaded", initGallery);
     </script>
 </body>
 </html>
