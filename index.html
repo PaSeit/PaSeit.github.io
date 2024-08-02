@@ -22,7 +22,7 @@
             border: 1px solid #e0e0e0;
         }
         .sidebar a, .sidebar .category {
-            padding: 15px 25px; /* Increased padding */
+            padding: 15px 25px;
             display: block;
             color: #333;
             text-decoration: none;
@@ -56,7 +56,7 @@
             margin-bottom: 20px;
         }
         .header h2 {
-            margin: 0 0 0 20px; /* Added margin-left */
+            margin: 0 0 0 20px;
         }
         .search-bar {
             margin-bottom: 20px;
@@ -72,7 +72,7 @@
         .subcategories {
             display: none;
             padding-left: 20px;
-            font-size: 0.9em; /* Smaller font size for subcategories */
+            font-size: 0.9em;
         }
         .category.open .subcategories {
             display: block;
@@ -85,7 +85,7 @@
         .gallery-item {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
-            padding: 20px; /* Increased padding */
+            padding: 20px;
             background: #f9f9f9;
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -99,7 +99,7 @@
         }
         .gallery-item h3 {
             margin-top: 0;
-            margin-bottom: 10px; /* Increased margin for better spacing */
+            margin-bottom: 10px;
         }
         .copy-btn {
             margin-top: 10px;
@@ -137,16 +137,19 @@
     <div class="content">
         <h1>Gallery</h1>
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search...">
+            <input type="text" id="searchInput" placeholder="Search..." oninput="searchGallery()">
         </div>
         <div class="gallery" id="gallery">
             <!-- Gallery items will be injected here -->
         </div>
     </div>
     <script>
+        let galleryData = [];
+
         async function fetchGalleryData() {
-            const response = await fetch('items.json'); // Path to your JSON file in the repository
+            const response = await fetch('items.json');
             const data = await response.json();
+            galleryData = data;
             return data;
         }
 
@@ -181,12 +184,44 @@
             });
         }
 
-        async function initGallery() {
-            const items = await fetchGalleryData();
-            loadGallery(items);
+        function filterGallery(category) {
+            const categories = document.querySelectorAll('.category, .subcategories a');
+            categories.forEach(cat => cat.classList.remove('active'));
+            const activeCategory = [...categories].find(cat => cat.textContent.trim() === category);
+            if (activeCategory) activeCategory.classList.add('active');
+
+            const filteredItems = category === 'All' ? galleryData : galleryData.filter(item => item.category === category);
+            loadGallery(filteredItems);
         }
 
-        document.addEventListener("DOMContentLoaded", initGallery);
+        function searchGallery() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const filteredItems = galleryData.filter(item => item.title.toLowerCase().includes(searchInput) || item.description.toLowerCase().includes(searchInput));
+            loadGallery(filteredItems);
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("Copied to clipboard");
+        }
+
+        function toggleSubcategories(element) {
+            element.classList.toggle('open');
+            const subcategories = element.nextElementSibling;
+            if (subcategories && subcategories.classList.contains('subcategories')) {
+                subcategories.style.display = subcategories.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            await fetchGalleryData();
+            filterGallery('All');
+        });
     </script>
 </body>
 </html>
