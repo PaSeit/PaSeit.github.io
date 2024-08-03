@@ -54,11 +54,13 @@ st.title('Create or Edit Item')
 
 selected_index = st.selectbox('Select Item to Edit (or create new)', [-1] + list(range(len(items))), format_func=lambda x: "Create New Item" if x == -1 else items[x]['title'])
 
+categories = ['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components', 'Functions', 'SVGs', 'Theme']
+
 if selected_index == -1:
     title = st.text_input('Title')
     image_file = st.file_uploader('Choose an image...', type=['png', 'jpg', 'jpeg', 'svg'])
     description = st.text_input('Description')
-    category = st.selectbox('Category', ['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components', 'Functions', 'SVGs'])
+    category = st.selectbox('Category', categories)
     yaml_code = st.text_input('YAML Code')
     version = st.text_input('Version')
     tags = st.text_input('Tags (comma separated)')
@@ -66,7 +68,7 @@ else:
     item = items[selected_index]
     title = st.text_input('Title', item['title'])
     description = st.text_input('Description', item['description'])
-    category = st.selectbox('Category', ['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components', 'Functions', 'SVGs'], index=['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components', 'Functions', 'SVGs'].index(item['category']))
+    category = st.selectbox('Category', categories, index=categories.index(item['category']))
     yaml_code = st.text_input('YAML Code', item['yamlCode'])
     version = st.text_input('Version', item.get('version', ''))
     tags = st.text_input('Tags (comma separated)', ', '.join(item.get('tags', [])))

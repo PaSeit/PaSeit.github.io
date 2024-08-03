@@ -9,5 +9,16 @@
         "tags": [
             "YAML"
         ]
+    },
+    {
+        "title": "Light Mode",
+        "image": "images\\light_mode.svg",
+        "description": "A light mode for your App",
+        "yamlCode": "sfsfsf",
+        "category": "Theme",
+        "version": "1.0",
+        "tags": [
+            "Collection"
+        ]
     }
 ]
