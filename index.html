@@ -297,6 +297,7 @@
     </div>
     <script>
         
+        let galleryData = [];
 
         function toggleSubcategories(element) {
             const subcategories = element.nextElementSibling;
@@ -436,8 +437,6 @@
         document.getElementById("searchInput").addEventListener("input", applyFilters);
 
         document.addEventListener("DOMContentLoaded", () => loadGallery('All'));
-
-        let galleryData = [];
 
         async function fetchGalleryData() {
             const response = await fetch('items.json');
