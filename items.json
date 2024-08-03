@@ -1,9 +1,13 @@
 [
     {
         "title": "Button",
-        "image": "images\\background.jpg",
+        "image": "images\\example.svg",
         "description": "A simple button with a hover effect.",
         "yamlCode": "Test",
-        "category": "Buttons"
+        "category": "Buttons",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ]
     }
 ]
