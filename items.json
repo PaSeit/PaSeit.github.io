@@ -31,5 +31,16 @@
         "tags": [
             "YAML"
         ]
+    },
+    {
+        "title": "Surfing Icon",
+        "image": "images\\surfing.svg",
+        "description": "The color will automatically adjust to the selected theme",
+        "yamlCode": "asdfadsf",
+        "category": "SVGs",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ]
     }
 ]
