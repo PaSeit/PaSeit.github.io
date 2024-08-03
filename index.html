@@ -3,49 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerApps Gallery</title>
+    <title>PowerApps</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --highlight-color: #6011f1;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             display: flex;
             height: 100vh;
             overflow: hidden;
-            background: #f0f0f0;
+            background: #121212;
+            color: #ffffff;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--highlight-color);
+            border-radius: 10px;
+            border: 4px solid #121212;
         }
         .sidebar {
             width: 250px;
-            background: #f4f4f4;
             padding: 20px 0;
-            border-radius: 8px;
-            margin: 10px;
-            border: 1px solid #e0e0e0;
+            margin: 0px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            background-color: #1e1e1e;
+            overflow-y: auto;
         }
         .sidebar a, .sidebar .category {
             padding: 15px 25px;
-            display: block;
-            color: #333;
+            display: flex;
+            align-items: center;
+            color: #b0b0b0;
             text-decoration: none;
             margin: 0 20px 10px 20px;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
             border-radius: 8px;
             cursor: pointer;
         }
         .sidebar a:hover, .sidebar .category:hover {
-            background: #ddd;
+            background: #333;
         }
         .sidebar a.active, .sidebar .category.active {
-            background: #007bff;
+            background: var(--highlight-color);
             color: #fff;
             font-weight: bold;
+        }
+        .sidebar .category span, .sidebar a span {
+            margin-left:20px;
+            flex-grow: 1;
+        }
+        .subcategories {
+            display: none;
+            padding-left: 20px;
+            font-size: 0.9em;
+        }
+        .category.open .subcategories {
+            display: block;
+        }
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
         }
         .content {
             flex-grow: 1;
             padding: 20px;
-            background: #fff;
-            margin: 10px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            background: #121212;
+            margin: 0px;
             overflow-y: auto;
         }
         .header {
@@ -59,104 +95,266 @@
             margin: 0 0 0 20px;
         }
         .search-bar {
-            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
         }
         .search-bar input {
-            padding: 10px;
+            padding: 10px 20px 10px 40px;
             font-size: 16px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #333;
             border-radius: 8px;
             width: 100%;
             max-width: 400px;
+            background: #1e1e1e;
+            color: #fff;
         }
-        .subcategories {
-            display: none;
-            padding-left: 20px;
-            font-size: 0.9em;
+        .search-bar .fa-search {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
         }
-        .category.open .subcategories {
-            display: block;
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-left: 10px;
+        }
+        .filters select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #1e1e1e;
+            color: #fff;
+            cursor: pointer;
+            max-width: 150px;
         }
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
+            flex-grow: 1;
         }
         .gallery-item {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            background: #f9f9f9;
+            border: 2px solid #202020;
+            border-radius: 12px;
+            background: #1e1e1e;
             transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 390px;
+            overflow: hidden;
         }
         .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03);
+        }
+        .gallery-item.copied {
+            border-color: var(--highlight-color);
+            animation: border-fill 0.5s forwards;
         }
         .gallery-item img {
-            max-width: 100%;
-            border-radius: 8px;
+            width: 100%;
+            height: 58%;
+            border-radius: 8px 8px 0 0;
+            object-fit: cover;
+            clip-path: polygon(0 0, 100% 0, 100% 86%, 0% 100%);
+        }
+        .gallery-item-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px;
+            padding-top: 16px;
+        }
+        .gallery-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
         .gallery-item h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
+            margin: 0;
+            flex-grow: 1;
+            color: #fff;
+        }
+        .tags {
+            display: flex;
+            gap: 5px;
+        }
+        .tag {
+            background: transparent;
+            border: 2px solid #4b4b4b;
+            color: #ffffff7d;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.8em;
+        }
+        .gallery-item p {
+            margin: 0 0 8px 0;
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.9em;
+            position: relative;
+            color: #ccc;
         }
         .copy-btn {
-            margin-top: 10px;
             padding: 10px;
-            background: #007bff;
+            min-width: 70px;
+            background: var(--highlight-color);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            align-self: flex-start;
+            margin-right: auto;
         }
         .copy-btn:hover {
             background: #0056b3;
+        }
+        .version {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9em;
+            align-self: center;
+            margin-left: auto;
+        }
+        .footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            flex-shrink: 0;
+        }
+        .no-items {
+            text-align: center;
+            color: #888;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        @keyframes border-fill {
+            0% {
+                border: 2px solid transparent;
+            }
+            85% {
+                border: 2px solid var(--highlight-color);
+            }
+            100% {
+                border: 2px solid transparent;
+            }
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <div class="header">
-            <h2>PowerApps</h2>
-        </div>
-        <div class="category active" onclick="filterGallery('All')">All</div>
-        <div class="category" onclick="filterGallery('Examples')">Examples</div>
-        <div class="category" onclick="toggleSubcategories(this)">Elements</div>
+        <div class="category" onclick="filterGallery('All')"><i class="fas fa-th"></i><span>All</span></div>
+        <div class="category" onclick="filterGallery('Theme')"><i class="fas fa-paint-brush"></i><span>Theme</span></div>
+        <div class="category" onclick="filterGallery('Examples')"><i class="fas fa-lightbulb"></i><span>Examples</span></div>
+        <div class="category" onclick="toggleSubcategories(this)"><i class="fas fa-cubes"></i><span>Elements</span><i class="fas fa-chevron-down" style="margin-left:auto;"></i></div>
         <div class="subcategories">
-            <a href="#" onclick="filterGallery('Buttons')">Buttons</a>
-            <a href="#" onclick="filterGallery('Labels')">Labels</a>
-            <a href="#" onclick="filterGallery('Galleries')">Galleries</a>
-            <a href="#" onclick="filterGallery('More')">More</a>
+            <a href="#" onclick="filterGallery('Buttons')"><i class="fas fa-square"></i><span>Buttons</span></a>
+            <a href="#" onclick="filterGallery('Labels')"><i class="fas fa-tag"></i><span>Labels</span></a>
+            <a href="#" onclick="filterGallery('Galleries')"><i class="fas fa-th-list"></i><span>Galleries</span></a>
+            <a href="#" onclick="filterGallery('More')"><i class="fas fa-ellipsis-h"></i><span>More</span></a>
         </div>
-        <a href="#" onclick="filterGallery('Components')">Components</a>
-        <a href="#" onclick="filterGallery('Functions')">Functions</a>
-        <a href="#" onclick="filterGallery('SVGs')">SVG's</a>
+        <a href="#" class="category" onclick="filterGallery('Components')"><i class="fas fa-cogs"></i><span>Components</span></a>
+        <a href="#" class="category" onclick="filterGallery('Functions')"><i class="fas fa-code"></i><span>Functions</span></a>
+        <a href="#" class="category" onclick="filterGallery('SVGs')"><i class="fas fa-vector-square"></i><span>SVG's</span></a>
     </div>
-    <div class="content">
-        <h1>Gallery</h1>
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search..." oninput="searchGallery()">
-        </div>
-        <div class="gallery" id="gallery">
-            <!-- Gallery items will be injected here -->
+    <div class="content-wrapper">
+        <div class="content">
+            <h1 id="galleryTitle">Gallery</h1>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search...">
+                <div class="filters">
+                    <select id="versionFilter" onchange="applyFilters()">
+                        <option value="">All Versions</option>
+                        <option value="v1.0">v1.0</option>
+                        <option value="v1.1">v1.1</option>
+                        <option value="v1.2">v1.2</option>
+                        <option value="v1.3">v1.3</option>
+                        <option value="v1.4">v1.4</option>
+                    </select>
+                    <select id="tagFilter" onchange="applyFilters()">
+                        <option value="">All Tags</option>
+                        <option value="YAML-Code">YAML-Code</option>
+                        <option value="OnStart">OnStart</option>
+                    </select>
+                </div>
+            </div>
+            <div class="gallery" id="gallery">
+                <!-- Gallery items will be injected here -->
+            </div>
+            <div id="noItemsMessage" class="no-items" style="display: none;">No items found for the selected filters.</div>
         </div>
     </div>
     <script>
-        let galleryData = [];
+        
 
-        async function fetchGalleryData() {
-            const response = await fetch('items.json');
-            const data = await response.json();
-            galleryData = data;
-            return data;
+        function toggleSubcategories(element) {
+            const subcategories = element.nextElementSibling;
+            const chevron = element.querySelector('.fa-chevron-down, .fa-chevron-up');
+            if (subcategories && subcategories.classList.contains('subcategories')) {
+                element.classList.toggle('open');
+                if (subcategories.style.display === 'block') {
+                    subcategories.style.display = 'none';
+                    chevron.classList.remove('fa-chevron-up');
+                    chevron.classList.add('fa-chevron-down');
+                } else {
+                    subcategories.style.display = 'block';
+                    chevron.classList.remove('fa-chevron-down');
+                    chevron.classList.add('fa-chevron-up');
+                }
+            }
         }
 
-        function loadGallery(items) {
+        function copyToClipboard(yamlCode, element) {
+            const tempTextarea = document.createElement("textarea");
+            tempTextarea.value = yamlCode;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextarea);
+
+            // Add the copied class to trigger the animation
+            element.classList.add("copied");
+            setTimeout(() => {
+                element.classList.remove("copied");
+            }, 1000); // Remove class after animation is complete
+        }
+
+        function applyFilters() {
+            const versionFilter = document.getElementById("versionFilter").value;
+            const tagFilter = document.getElementById("tagFilter").value;
+            const searchInput = document.getElementById("searchInput").value;
+            const activeCategory = document.querySelector('.category.active')?.textContent.trim() || 'All';
+            loadGallery(activeCategory, searchInput, versionFilter, tagFilter);
+        }
+
+        function loadGallery(category = '', searchQuery = '', versionFilter = '', tagFilter = '') {
             const gallery = document.getElementById("gallery");
+            const noItemsMessage = document.getElementById("noItemsMessage");
             gallery.innerHTML = "";
-            items.forEach(item => {
+            const filteredItems = galleryData
+                .filter(item => (category === 'All' || category === '' || item.category === category) &&
+                                (searchQuery === '' || item.title.toLowerCase().includes(searchQuery.toLowerCase())) &&
+                                (versionFilter === '' || item.version === versionFilter) &&
+                                (tagFilter === '' || item.tags.includes(tagFilter)));
+            
+            if (filteredItems.length === 0) {
+                noItemsMessage.style.display = "block";
+            } else {
+                noItemsMessage.style.display = "none";
+            }
+
+            filteredItems.forEach(item => {
                 const galleryItem = document.createElement("div");
                 galleryItem.className = "gallery-item";
                 
@@ -164,58 +362,88 @@
                 img.src = item.image;
                 img.alt = item.title;
                 
+                const galleryItemContent = document.createElement("div");
+                galleryItemContent.className = "gallery-item-content";
+                
+                const header = document.createElement("div");
+                header.className = "gallery-item-header";
+                
                 const title = document.createElement("h3");
                 title.textContent = item.title;
+
+                const titleContainer = document.createElement("div");
+                titleContainer.style.display = "flex";
+                titleContainer.style.justifyContent = "space-between";
+                titleContainer.style.alignItems = "center";
+                titleContainer.appendChild(title);
+                
+                const tags = document.createElement("div");
+                tags.className = "tags";
+                item.tags.forEach(tag => {
+                    const tagElement = document.createElement("div");
+                    tagElement.className = "tag";
+                    tagElement.textContent = tag;
+                    tags.appendChild(tagElement);
+                });
+                
+                header.appendChild(titleContainer);
+                header.appendChild(tags);
                 
                 const description = document.createElement("p");
-                description.textContent = item.description;
+                description.textContent = item.description.length > 40 ? item.description.slice(0, 40) + '...' : item.description;
+                
+                const buttonContainer = document.createElement("div");
+                buttonContainer.style.display = "flex";
+                buttonContainer.style.justifyContent = "space-between";
+                buttonContainer.style.alignItems = "center";
                 
                 const button = document.createElement("button");
                 button.className = "copy-btn";
-                button.textContent = "Copy to Clipboard";
-                button.onclick = () => copyToClipboard(item.yamlCode);
+                button.textContent = "Copy";
+                button.onclick = () => copyToClipboard(item.yamlCode, galleryItem);
+                
+                const version = document.createElement("span");
+                version.className = "version";
+                version.textContent = item.version;
+
+                buttonContainer.appendChild(button);
+                buttonContainer.appendChild(version);
+                
+                galleryItemContent.appendChild(header);
+                galleryItemContent.appendChild(description);
+                galleryItemContent.appendChild(buttonContainer);
                 
                 galleryItem.appendChild(img);
-                galleryItem.appendChild(title);
-                galleryItem.appendChild(description);
-                galleryItem.appendChild(button);
+                galleryItem.appendChild(galleryItemContent);
                 
                 gallery.appendChild(galleryItem);
             });
+
+            document.getElementById("galleryTitle").textContent = category || 'Gallery';
         }
 
         function filterGallery(category) {
             const categories = document.querySelectorAll('.category, .subcategories a');
             categories.forEach(cat => cat.classList.remove('active'));
-            const activeCategory = [...categories].find(cat => cat.textContent.trim() === category);
+            const activeCategory = [...categories].find(cat => cat.textContent.trim() === category || (category === "SVGs" && cat.textContent.trim() === "SVG's"));
             if (activeCategory) activeCategory.classList.add('active');
-
-            const filteredItems = category === 'All' ? galleryData : galleryData.filter(item => item.category === category);
-            loadGallery(filteredItems);
+            const searchInput = document.getElementById("searchInput").value;
+            const versionFilter = document.getElementById("versionFilter").value;
+            const tagFilter = document.getElementById("tagFilter").value;
+            loadGallery(category, searchInput, versionFilter, tagFilter);
         }
 
-        function searchGallery() {
-            const searchInput = document.getElementById("searchInput").value.toLowerCase();
-            const filteredItems = galleryData.filter(item => item.title.toLowerCase().includes(searchInput) || item.description.toLowerCase().includes(searchInput));
-            loadGallery(filteredItems);
-        }
+        document.getElementById("searchInput").addEventListener("input", applyFilters);
 
-        function copyToClipboard(text) {
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-            alert("Copied to clipboard");
-        }
+        document.addEventListener("DOMContentLoaded", () => loadGallery('All'));
 
-        function toggleSubcategories(element) {
-            element.classList.toggle('open');
-            const subcategories = element.nextElementSibling;
-            if (subcategories && subcategories.classList.contains('subcategories')) {
-                subcategories.style.display = subcategories.style.display === 'block' ? 'none' : 'block';
-            }
+        let galleryData = [];
+
+        async function fetchGalleryData() {
+            const response = await fetch('items.json');
+            const data = await response.json();
+            galleryData = data;
+            return data;
         }
 
         document.addEventListener("DOMContentLoaded", async () => {
