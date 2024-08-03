@@ -20,5 +20,16 @@
         "tags": [
             "Collection"
         ]
+    },
+    {
+        "title": "Icon Chair",
+        "image": "images\\chari.svg",
+        "description": "Chair Icon, adaptes based on the selected theme",
+        "yamlCode": "sfasdf",
+        "category": "SVGs",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ]
     }
 ]
