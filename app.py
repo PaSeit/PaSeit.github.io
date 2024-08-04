@@ -56,22 +56,37 @@ selected_index = st.selectbox('Select Item to Edit (or create new)', [-1] + list
 
 categories = ['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components', 'Functions', 'SVGs', 'Theme']
 
+# Gather all existing versions and tags
+existing_versions = list(set(item['version'] for item in items))
+existing_tags = list(set(tag for item in items for tag in item.get('tags', [])))
+
 if selected_index == -1:
     title = st.text_input('Title')
     image_file = st.file_uploader('Choose an image...', type=['png', 'jpg', 'jpeg', 'svg'])
-    description = st.text_input('Description')
+    description = st.text_input('Description', 'Color adjusts with theme' if 'Icon' in title else '')
     category = st.selectbox('Category', categories)
-    yaml_code = st.text_input('YAML Code')
-    version = st.text_input('Version')
-    tags = st.text_input('Tags (comma separated)')
+    version = st.selectbox('Version', existing_versions + ['Add new version'])
+    if version == 'Add new version':
+        version = st.text_input('New Version')
+    tags = st.multiselect('Tags', options=existing_tags + ['Add new tag'])
+    if 'Add new tag' in tags:
+        new_tag = st.text_input('New Tag')
+        if new_tag:
+            tags.append(new_tag)
 else:
     item = items[selected_index]
     title = st.text_input('Title', item['title'])
     description = st.text_input('Description', item['description'])
     category = st.selectbox('Category', categories, index=categories.index(item['category']))
     yaml_code = st.text_input('YAML Code', item['yamlCode'])
-    version = st.text_input('Version', item.get('version', ''))
-    tags = st.text_input('Tags (comma separated)', ', '.join(item.get('tags', [])))
+    version = st.selectbox('Version', existing_versions + ['Add new version'], index=existing_versions.index(item.get('version', '')) if item.get('version', '') in existing_versions else -1)
+    if version == 'Add new version':
+        version = st.text_input('New Version')
+    tags = st.multiselect('Tags', options=existing_tags + ['Add new tag'], default=item.get('tags', []))
+    if 'Add new tag' in tags:
+        new_tag = st.text_input('New Tag')
+        if new_tag:
+            tags.append(new_tag)
     image_path = item['image']
     
     # Display image or SVG
@@ -84,7 +99,7 @@ else:
 
 if st.button('Save Item'):
     if title and description and category and yaml_code and version and tags:
-        tags_list = [tag.strip() for tag in tags.split(',')]
+        tags_list = [tag for tag in tags if tag != 'Add new tag']
         if image_file:
             image_path = os.path.join(IMAGES_DIR, image_file.name)
             with open(image_path, 'wb') as f:
