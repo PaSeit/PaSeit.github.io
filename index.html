@@ -1,262 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9083993973318629"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerApps</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9083993973318629" crossorigin="anonymous"></script>
     <style>
-        :root {
-            --highlight-color: #6011f1;
-            zoom: 74%;
-        }
-        html
-        {
-            width: 100%;
-            height: 100%;
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            display: flex;
-            height: 100%;
-            overflow: hidden;
-            background: #121212;
-            color: #ffffff;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--highlight-color);
-            border-radius: 10px;
-            border: 4px solid #121212;
-        }
-        .sidebar {
-            width: 250px;
-            padding: 20px 0;
-            height: 100%;
-            margin: 0px;
-            box-sizing: border-box;
-            flex-shrink: 0;
-            background-color: #1e1e1e;
-            overflow-y: auto;
-        }
-        .sidebar a, .sidebar .category {
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            color: #b0b0b0;
-            text-decoration: none;
-            margin: 0 20px 10px 20px;
-            transition: background 0.3s, color 0.3s;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .sidebar a:hover, .sidebar .category:hover {
-            background: #333;
-        }
-        .sidebar a.active, .sidebar .category.active {
-            background: var(--highlight-color);
-            color: #fff;
-            font-weight: bold;
-        }
-        .sidebar .category span, .sidebar a span {
-            margin-left:20px;
-            flex-grow: 1;
-        }
-        .subcategories {
-            display: none;
-            padding-left: 20px;
-            font-size: 0.9em;
-        }
-        .category.open .subcategories {
-            display: block;
-        }
-        .content-wrapper {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: row;
-            height: 100%;
-        }
-        .content {
-            flex-grow: 1;
-            padding: 20px;
-            background: #121212;
-            margin: 0px;
-            overflow-y: auto;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            margin-bottom: 20px;
-        }
-        .header h2 {
-            margin: 0 0 0 20px;
-        }
-        .search-bar {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-        }
-        .search-bar input {
-            padding: 10px 20px 10px 40px;
-            font-size: 16px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            background: #1e1e1e;
-            color: #fff;
-        }
-        .search-bar .fa-search {
+        .navigate-button {
             position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-        }
-        .filters {
-            display: flex;
-            gap: 10px;
-            margin-left: 10px;
-        }
-        .filters select {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            background: #1e1e1e;
-            color: #fff;
-            cursor: pointer;
-            max-width: 150px;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            flex-grow: 1;
-        }
-        .gallery-item {
-            border: 2px solid #202020;
-            border-radius: 12px;
-            background: #1e1e1e;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            height: 390px;
-            overflow: hidden;
-        }
-        .gallery-item:hover {
-            transform: scale(1.03);
-        }
-        .gallery-item.copied {
-            border-color: var(--highlight-color);
-            animation: border-fill 0.5s forwards;
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 58%;
-            border-radius: 8px 8px 0 0;
-            object-fit: cover;
-            clip-path: polygon(0 0, 100% 0, 100% 86%, 0% 100%);
-        }
-        .gallery-item-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 24px;
-            padding-top: 16px;
-        }
-        .gallery-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .gallery-item h3 {
-            margin: 0;
-            flex-grow: 1;
-            color: #fff;
-        }
-        .tags {
-            display: flex;
-            gap: 5px;
-        }
-        .tag {
-            background: transparent;
-            border: 2px solid #4b4b4b;
-            color: #ffffff7d;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 0.8em;
-        }
-        .gallery-item p {
-            margin: 0 0 8px 0;
-            flex-grow: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 0.9em;
-            position: relative;
-            color: #ccc;
-        }
-        .copy-btn {
-            padding: 10px;
-            min-width: 70px;
-            background: var(--highlight-color);
+            top: 16px;
+            right: 16px;
+            padding: 10px 20px;
+            background-color: var(--highlight-color);
             color: #fff;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            align-self: flex-start;
-            margin-right: auto;
+            transition: background-color 0.3s;
         }
-        .copy-btn:hover {
-            background: #0056b3;
-        }
-        .version {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9em;
-            align-self: center;
-            margin-left: auto;
-        }
-        .footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            flex-shrink: 0;
-        }
-        .no-items {
-            text-align: center;
-            color: #888;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        @keyframes border-fill {
-            0% {
-                border: 2px solid transparent;
-            }
-            85% {
-                border: 2px solid var(--highlight-color);
-            }
-            100% {
-                border: 2px solid transparent;
-            }
+
+        .navigate-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -275,8 +42,10 @@
         <a href="#" class="category" onclick="filterGallery('Components')"><i class="fas fa-cogs"></i><span>Components</span></a>
         <a href="#" class="category" onclick="filterGallery('Functions')"><i class="fas fa-code"></i><span>Functions</span></a>
         <a href="#" class="category" onclick="filterGallery('SVGs')"><i class="fas fa-vector-square"></i><span>SVG's</span></a>
+        <a href="icons.html" class="category"><i class="fas fa-icons"></i><span>Icons</span></a>
     </div>
     <div class="content-wrapper">
+        <button class="navigate-button" onclick="window.location.href='icons.html'">Go to Icons</button>
         <div class="content">
             <h1 id="galleryTitle">Gallery</h1>
             <div class="search-bar">
@@ -304,170 +73,6 @@
             <div id="noItemsMessage" class="no-items" style="display: none;">No items found for the selected filters.</div>
         </div>
     </div>
-    <script>
-        
-        let galleryData = [];
-
-        function toggleSubcategories(element) {
-            const subcategories = element.nextElementSibling;
-            const chevron = element.querySelector('.fa-chevron-down, .fa-chevron-up');
-            if (subcategories && subcategories.classList.contains('subcategories')) {
-                element.classList.toggle('open');
-                if (subcategories.style.display === 'block') {
-                    subcategories.style.display = 'none';
-                    chevron.classList.remove('fa-chevron-up');
-                    chevron.classList.add('fa-chevron-down');
-                } else {
-                    subcategories.style.display = 'block';
-                    chevron.classList.remove('fa-chevron-down');
-                    chevron.classList.add('fa-chevron-up');
-                }
-            }
-        }
-
-        async function copyToClipboard(yamlFile, element) {
-            try {
-                const response = await fetch(yamlFile);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const yamlCode = await response.text();
-                
-                const tempTextarea = document.createElement("textarea");
-                tempTextarea.value = yamlCode;
-                document.body.appendChild(tempTextarea);
-                tempTextarea.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempTextarea);
-
-                // Add the copied class to trigger the animation
-                element.classList.add("copied");
-                setTimeout(() => {
-                    element.classList.remove("copied");
-                }, 1000); // Remove class after animation is complete
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-            }
-        }
-
-        function applyFilters() {
-            const versionFilter = document.getElementById("versionFilter").value;
-            const tagFilter = document.getElementById("tagFilter").value;
-            const searchInput = document.getElementById("searchInput").value;
-            const activeCategory = document.querySelector('.category.active')?.textContent.trim() || 'All';
-            loadGallery(activeCategory, searchInput, versionFilter, tagFilter);
-        }
-
-        function loadGallery(category = '', searchQuery = '', versionFilter = '', tagFilter = '') {
-            const gallery = document.getElementById("gallery");
-            const noItemsMessage = document.getElementById("noItemsMessage");
-            gallery.innerHTML = "";
-            const filteredItems = galleryData
-                .filter(item => (category === 'All' || category === '' || item.category === category) &&
-                                (searchQuery === '' || item.title.toLowerCase().includes(searchQuery.toLowerCase())) &&
-                                (versionFilter === '' || item.version === versionFilter) &&
-                                (tagFilter === '' || item.tags.includes(tagFilter)));
-            
-            if (filteredItems.length === 0) {
-                noItemsMessage.style.display = "block";
-            } else {
-                noItemsMessage.style.display = "none";
-            }
-
-            filteredItems.forEach(item => {
-                const galleryItem = document.createElement("div");
-                galleryItem.className = "gallery-item";
-                
-                const img = document.createElement("img");
-                img.src = item.image;
-                img.alt = item.title;
-                
-                const galleryItemContent = document.createElement("div");
-                galleryItemContent.className = "gallery-item-content";
-                
-                const header = document.createElement("div");
-                header.className = "gallery-item-header";
-                
-                const title = document.createElement("h3");
-                title.textContent = item.title;
-
-                const titleContainer = document.createElement("div");
-                titleContainer.style.display = "flex";
-                titleContainer.style.justifyContent = "space-between";
-                titleContainer.style.alignItems = "center";
-                titleContainer.appendChild(title);
-                
-                const tags = document.createElement("div");
-                tags.className = "tags";
-                item.tags.forEach(tag => {
-                    const tagElement = document.createElement("div");
-                    tagElement.className = "tag";
-                    tagElement.textContent = tag;
-                    tags.appendChild(tagElement);
-                });
-                
-                header.appendChild(titleContainer);
-                header.appendChild(tags);
-                
-                const description = document.createElement("p");
-                description.textContent = item.description.length > 40 ? item.description.slice(0, 40) + '...' : item.description;
-                
-                const buttonContainer = document.createElement("div");
-                buttonContainer.style.display = "flex";
-                buttonContainer.style.justifyContent = "space-between";
-                buttonContainer.style.alignItems = "center";
-                
-                const button = document.createElement("button");
-                button.className = "copy-btn";
-                button.textContent = "Copy";
-                button.onclick = () => copyToClipboard(item.yamlFile, galleryItem);
-                
-                const version = document.createElement("span");
-                version.className = "version";
-                version.textContent = item.version;
-
-                buttonContainer.appendChild(button);
-                buttonContainer.appendChild(version);
-                
-                galleryItemContent.appendChild(header);
-                galleryItemContent.appendChild(description);
-                galleryItemContent.appendChild(buttonContainer);
-                
-                galleryItem.appendChild(img);
-                galleryItem.appendChild(galleryItemContent);
-                
-                gallery.appendChild(galleryItem);
-            });
-
-            document.getElementById("galleryTitle").textContent = category || 'Gallery';
-        }
-
-        function filterGallery(category) {
-            const categories = document.querySelectorAll('.category, .subcategories a');
-            categories.forEach(cat => cat.classList.remove('active'));
-            const activeCategory = [...categories].find(cat => cat.textContent.trim() === category || (category === "SVGs" && cat.textContent.trim() === "SVG's"));
-            if (activeCategory) activeCategory.classList.add('active');
-            const searchInput = document.getElementById("searchInput").value;
-            const versionFilter = document.getElementById("versionFilter").value;
-            const tagFilter = document.getElementById("tagFilter").value;
-            loadGallery(category, searchInput, versionFilter, tagFilter);
-        }
-
-        document.getElementById("searchInput").addEventListener("input", applyFilters);
-
-        document.addEventListener("DOMContentLoaded", () => loadGallery('All'));
-
-        async function fetchGalleryData() {
-            const response = await fetch('items.json');
-            const data = await response.json();
-            galleryData = data;
-            return data;
-        }
-
-        document.addEventListener("DOMContentLoaded", async () => {
-            await fetchGalleryData();
-            filterGallery('All');
-        });
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

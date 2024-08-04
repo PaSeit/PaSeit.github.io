@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG File Upload</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --highlight-color: #6011f1;
+            zoom: 74%;
+        }
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--highlight-color);
+            border-radius: 10px;
+            border: 4px solid #121212;
+        }
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            background-color: black;
+            background-image: url("grid_background.svg");
+            backdrop-filter: blur(3px);
+            backdrop-filter: brightness(40%);
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
+        #drop_zone {
+            width: 300px;
+            height: 200px;
+            border: 3px dashed #cccccc5d;
+            line-height: 200px;
+            border-radius: 12px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            margin: 50px auto;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            margin: auto;
+        }
+        .label_container {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            margin: 16px;
+            padding: 32px;
+            border-radius: 8px;
+            background-color: #1e1e1e;
+            color: #fff;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        label {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .label_container_title {
+            font-weight: bold;
+            font-size: larger;
+        }
+        .copy_button, .back_button {
+            margin: auto;
+            margin-left: 20px;
+            margin-top: 20px;
+            height: 40px;
+            border-radius: 8px;
+            width: 200px;
+            background-color: var(--highlight-color);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .copy_button:hover, .back_button:hover {
+            background-color: #0056b3;
+        }
+        #svg_display {
+            display: none;
+            margin: 20px auto;
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<button class="back_button" onclick="window.location.href='index.html'">Back to Gallery</button>
+
+<div id="drop_zone">
+    <label for="file_input">Paste SVG File</label>
+</div>
+
+<img id="svg_display" alt="SVG Preview"/>
+
+<div class="gallery">
+    <div class="label_container" id="container_a">
+        <label class="label_container_title">Code</label>
+        <label id="a">
+            &quot;data:image/svg+xml;utf8,&quot; &amp; EncodeUrl(&quot;&lt;svg xmlns=&quot;&quot;http://www.w3.org/2000/svg&quot;&quot; viewBox=&quot;&quot;0 -960 960 960&quot;&quot; fill='&quot; &amp; If(
+            Self.DisplayMode = DisplayMode.Disabled,
+            Substitute(
+                JSON(
+                    LookUp(
+                        THEMING,
+                        ID = THEME_MODE_ID
+                    ).VALUES.DISABLED_COLOR
+                ),
+                Char(34),
+                &quot;&quot;
+            ),
+            Substitute(
+                JSON(
+                    LookUp(
+                        THEMING,
+                        ID = THEME_MODE_ID
+                    ).VALUES.ICON.COLOR
+                ),
+                Char(34),
+                &quot;&quot;
+            )
+        ) &amp; &quot;'&quot; &amp; &quot;&gt;&lt;path d=&quot;&quot;
+        </label>
+        <label id="path_label"></label>
+        <label id="b">
+            &quot;&quot;/&gt;&lt;/svg&gt;&quot;)
+        </label>
+        <button onclick="copyToClipboard('container_a')" class="copy_button">Copy Code</button>
+    </div>
+
+    <div class="label_container" id="container_b">
+        <label class="label_container_title">Only Path</label>
+        <label id="path_only_label"></label>
+        <button onclick="copyToClipboard('container_b')" class="copy_button">Copy Code</button>
+    </div>
+
+    <div class="label_container" id="container_c">
+        <label class="label_container_title">YAML Format</label>
+        <pre id="yaml_format" style="white-space: pre-wrap;"></pre>
+        <button onclick="copyToClipboard('container_c')" class="copy_button">Copy Code</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('paste', handlePaste);
+
+    function handlePaste(event) {
+        event.preventDefault(); // Prevent the default paste action
+
+        const clipboardData = event.clipboardData || window.clipboardData;
+        const pastedData = clipboardData.getData('Text');
+
+        if (pastedData.includes('<svg')) {
+            processSvgData(pastedData);
+        } else {
+            alert("Please paste a valid SVG content.");
+        }
+    }
+
+    function processSvgData(svgData) {
+        var parser = new DOMParser();
+        var svgDoc = parser.parseFromString(svgData, "image/svg+xml");
+        var paths = svgDoc.querySelectorAll("path");
+        var pathData = "";
+
+        paths.forEach(function(path) {
+            pathData += path.getAttribute("d") + "\n";
+        });
+
+        // Clear previous content
+        document.getElementById('path_label').innerText = '';
+        document.getElementById('path_only_label').innerText = '';
+
+        // Set new content
+        document.getElementById('path_label').innerText = pathData.trim();
+        document.getElementById('path_only_label').innerText = pathData.trim();
+
+        // Display the SVG
+        var svgDisplay = document.getElementById('svg_display');
+        svgDisplay.style.display = 'block';
+        svgDisplay.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+
+        // Update YAML format
+        updateYamlFormat(svgData, pathData.trim());
+    }
+
+    function updateYamlFormat(svgData, pathData) {
+        const yamlContent = `- image_icon:
+    Control: Image
+    Properties:
+      Image: 
+        ="data:image/svg+xml;utf8," & EncodeUrl(
+            "${svgData.replace(/"/g, '""')}"
+        )
+      BorderColor: =Color.Transparent
+      DisabledBorderColor: =RGBA(0, 0, 0, 0)
+      DisabledFill: =Color.Transparent
+      Fill: =Color.Transparent
+      Height: =LookUp(THEMING, ID = THEME_MODE_ID).VALUES.ICON.SIZE_LARGE
+      HoverBorderColor: =Color.Transparent
+      HoverFill: =Color.Transparent
+      PressedBorderColor: =Color.Transparent
+      PressedFill: =Color.Transparent
+      Width: =LookUp(THEMING, ID = THEME_MODE_ID).VALUES.ICON.SIZE_LARGE
+      X: =855
+      Y: =332`;
+        document.getElementById('yaml_format').innerText = yamlContent;
+    }
+
+    function copyToClipboard(containerId) {
+        var container = document.getElementById(containerId);
+        var text = "";
+        if (containerId === 'container_c') {
+            text = document.getElementById('yaml_format').innerText;
+        } else {
+            container.childNodes.forEach(function(node) {
+                if (node.nodeName === "LABEL" && !node.classList.contains("label_container_title")) {
+                    text += node.innerText + "\n";
+                }
+            });
+        }
+        navigator.clipboard.writeText(text).then(function() {
+            console.log('Text copied to clipboard successfully');
+        }, function(err) {
+            console.error('Unable to copy text to clipboard', err);
+        });
+    }
+</script>
+
+</body>
+</html>
