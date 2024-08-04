@@ -3,7 +3,7 @@
         "title": "Button",
         "image": "images\\button.svg",
         "description": "Simple Button",
-        "yamlFile": "items\\button.yml",
+        "yamlFile": "Items\\button.yml",
         "category": "Buttons",
         "version": "1.0",
         "tags": [

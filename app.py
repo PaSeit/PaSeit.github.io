@@ -5,7 +5,7 @@ import json
 # Paths
 ITEMS_JSON_PATH = r'items.json'
 IMAGES_DIR = r'images'
-ITEMS_DIR = r'items'
+ITEMS_DIR = r'Items'
 
 # Ensure the directories exist
 for directory in [IMAGES_DIR, ITEMS_DIR]:
