@@ -34,11 +34,10 @@
             height: 100%;
             width: 100%;
             display: flex;
-            flex-direction: column;
             font-family: 'Roboto', sans-serif;
             color: #ffffff;
             margin: 0;
-            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow: hidden;
         }
         #drop_zone {
             width: 300px;
@@ -51,34 +50,31 @@
             cursor: pointer;
             margin: 50px auto;
         }
-        .gallery {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            margin: auto;
-        }
         .label_container {
-            width: 400px;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            margin: 16px;
+            margin: auto;
+            margin-top: 16px;
             padding: 32px;
             border-radius: 8px;
             background-color: #1e1e1e;
             color: #fff;
-            flex-shrink: 0; /* Prevent shrinking */
         }
         label {
             font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
         }
         .label_container_title {
+            font-family: 'Roboto', sans-serif;
             font-weight: bold;
-            font-size: larger;
+            font-size: 17px;
         }
-        .copy_button, .back_button {
-            margin: auto;
-            margin-left: 20px;
-            margin-top: 20px;
+        .back_button
+        {
+            position: absolute;
+            left: 16px;
+            top: 16px;
             height: 40px;
             border-radius: 8px;
             width: 200px;
@@ -88,8 +84,30 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+        .copy_button {
+            margin: auto;
+            margin-left: 0px;
+            margin-top: 20px;
+            height: 40px;
+            border-radius: 8px;
+            width: 100px;
+            background-color: var(--highlight-color);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
         .copy_button:hover, .back_button:hover {
             background-color: #0056b3;
+        }
+        #main_content_container
+        {
+            width: calc(100% - 400px);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         #svg_display {
             display: none;
@@ -97,19 +115,34 @@
             width: 100px;
             height: auto;
         }
+        .sidebar {
+            width: 400px;
+            background-color: #1e1e1e;
+            padding: 16px;
+            border-left: 2px solid #6011f1;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100%;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
 
 <button class="back_button" onclick="window.location.href='index.html'">Back to Gallery</button>
 
-<div id="drop_zone">
-    <label for="file_input">Paste SVG File</label>
+
+<div id="main_content_container">
+    <div id="drop_zone">
+        <label for="file_input">Paste SVG File</label>
+    </div>
+    
+    <img id="svg_display" alt="SVG Preview"/>
 </div>
 
-<img id="svg_display" alt="SVG Preview"/>
 
-<div class="gallery">
+<div class="sidebar">
     <div class="label_container" id="container_a">
         <label class="label_container_title">Code</label>
         <label id="a">
