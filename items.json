@@ -70,5 +70,41 @@
             "YAML"
         ],
         "simpleCode": ""
+    },
+    {
+        "title": "Add Alpha",
+        "image": "images\\function.svg",
+        "description": "Add alpha value to any color.",
+        "yamlFile": null,
+        "category": "Functions",
+        "version": "1.0",
+        "tags": [
+            "FX"
+        ],
+        "simpleCode": "add_alpha(base_color:Color, alpha_value:Number):Color = IfError(ColorValue(Concatenate(Left(Substitute(JSON(base_color),\"\"\"\",\"\"),7),Dec2Hex(Round(alpha_value/100*255,0)))), Color.Transparent);"
+    },
+    {
+        "title": " Ease in - Ease out",
+        "image": "images\\function.svg",
+        "description": "Animation function.",
+        "yamlFile": null,
+        "category": "Functions",
+        "version": "1.0",
+        "tags": [
+            "FX"
+        ],
+        "simpleCode": "ease_in_ease_out(t:Number):Number = If(t<= 0.5, 2*t*t, 2*(t-0.5)*(1-(t-0.5)) + 0.5);"
+    },
+    {
+        "title": "Ease in - Ease out (fast)",
+        "image": "images\\function.svg",
+        "description": "Animation function.",
+        "yamlFile": null,
+        "category": "Functions",
+        "version": "1.0",
+        "tags": [
+            "FX"
+        ],
+        "simpleCode": "ease_in_ease_out_fast(t:Number):Number = If(t <= 0.5, 4*t*t*t, 1 - 4*(1-t)*(1-t)*(1-t));"
     }
 ]

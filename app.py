@@ -63,7 +63,7 @@ categories = ['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components'
 # Gather all existing versions and tags
 existing_versions = list(set(item['version'] for item in items))
 existing_tags = list(set(tag for item in items for tag in item.get('tags', [])))
-yaml_files = [f for f in os.listdir(ITEMS_DIR) if f.endswith('.yml')]
+yaml_files = ['None'] + [f for f in os.listdir(ITEMS_DIR) if f.endswith('.yml')]
 
 if selected_index == -1:
     title = st.text_input('Title')
@@ -85,7 +85,11 @@ else:
     title = st.text_input('Title', item['title'])
     description = st.text_input('Description', item['description'])
     category = st.selectbox('Category', categories, index=categories.index(item['category']))
-    yaml_file = st.selectbox('YAML File', yaml_files, index=yaml_files.index(os.path.basename(item['yamlFile'])) if os.path.basename(item['yamlFile']) in yaml_files else 0)
+    
+    # Handle None case for yamlFile
+    yaml_file_index = yaml_files.index(os.path.basename(item['yamlFile'])) if item['yamlFile'] and os.path.basename(item['yamlFile']) in yaml_files else 0
+    yaml_file = st.selectbox('YAML File', yaml_files, index=yaml_file_index)
+    
     version = st.selectbox('Version', existing_versions + ['Add new version'], index=existing_versions.index(item.get('version', '')) if item.get('version', '') in existing_versions else -1)
     if version == 'Add new version':
         version = st.text_input('New Version')
@@ -106,9 +110,9 @@ else:
     image_file = st.file_uploader('Choose an image...', type=['png', 'jpg', 'jpeg', 'svg'])
 
 if st.button('Save Item'):
-    if title and description and category and yaml_file and version and tags:
+    if title and description and category and version and tags:
         tags_list = [tag for tag in tags if tag != 'Add new tag']
-        yaml_file_path = os.path.join(ITEMS_DIR, yaml_file)
+        yaml_file_path = None if yaml_file == 'None' else os.path.join(ITEMS_DIR, yaml_file)
         if image_file:
             image_path = os.path.join(IMAGES_DIR, image_file.name)
             with open(image_path, 'wb') as f:

@@ -17,16 +17,16 @@ function toggleSubcategories(element) {
     }
 }
 
-async function copyToClipboard(yamlFile, element) {
+async function copyToClipboard(yamlFile, element, isYAML = false) {
     try {
         const response = await fetch(yamlFile);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const yamlCode = await response.text();
-        
+        const content = await response.text();
+
         const tempTextarea = document.createElement("textarea");
-        tempTextarea.value = yamlCode;
+        tempTextarea.value = content;
         document.body.appendChild(tempTextarea);
         tempTextarea.select();
         document.execCommand("copy");
@@ -112,7 +112,10 @@ function loadGallery(category = '', searchQuery = '', versionFilter = '', tagFil
         const button = document.createElement("button");
         button.className = "copy-btn";
         button.textContent = "Copy";
-        button.onclick = () => copyToClipboard(item.yamlFile, galleryItem);
+        button.onclick = () => {
+            const isYAML = item.tags.includes('YAML');
+            copyToClipboard(isYAML ? item.yamlFile : item.codeFile, galleryItem, isYAML);
+        };
         
         const version = document.createElement("span");
         version.className = "version";
