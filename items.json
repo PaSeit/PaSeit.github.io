@@ -22,5 +22,53 @@
             "YAML"
         ],
         "simpleCode": ""
+    },
+    {
+        "title": "Search Bar",
+        "image": "images\\search_input.svg",
+        "description": "Simple search bar.",
+        "yamlFile": "Items\\search_input.yml",
+        "category": "Components",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Default Gallery",
+        "image": "images\\default_gallery.svg",
+        "description": "Simple gallery.",
+        "yamlFile": "Items\\default_gallery.yml",
+        "category": "Components",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "(Modern) Dropdown",
+        "image": "images\\dropdown.svg",
+        "description": "Modern dropdown control.",
+        "yamlFile": "Items\\dropdown.yml",
+        "category": "Examples",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Input",
+        "image": "images\\input.svg",
+        "description": "Single line input field.",
+        "yamlFile": "Items\\input_single_line.yml",
+        "category": "Components",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
     }
 ]
