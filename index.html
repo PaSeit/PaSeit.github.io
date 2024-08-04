@@ -325,19 +325,29 @@
             }
         }
 
-        function copyToClipboard(yamlCode, element) {
-            const tempTextarea = document.createElement("textarea");
-            tempTextarea.value = yamlCode;
-            document.body.appendChild(tempTextarea);
-            tempTextarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempTextarea);
+        async function copyToClipboard(yamlFile, element) {
+            try {
+                const response = await fetch(yamlFile);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const yamlCode = await response.text();
+                
+                const tempTextarea = document.createElement("textarea");
+                tempTextarea.value = yamlCode;
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempTextarea);
 
-            // Add the copied class to trigger the animation
-            element.classList.add("copied");
-            setTimeout(() => {
-                element.classList.remove("copied");
-            }, 1000); // Remove class after animation is complete
+                // Add the copied class to trigger the animation
+                element.classList.add("copied");
+                setTimeout(() => {
+                    element.classList.remove("copied");
+                }, 1000); // Remove class after animation is complete
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
         }
 
         function applyFilters() {
@@ -410,7 +420,7 @@
                 const button = document.createElement("button");
                 button.className = "copy-btn";
                 button.textContent = "Copy";
-                button.onclick = () => copyToClipboard(item.yamlCode, galleryItem);
+                button.onclick = () => copyToClipboard(item.yamlFile, galleryItem);
                 
                 const version = document.createElement("span");
                 version.className = "version";

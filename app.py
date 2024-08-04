@@ -63,7 +63,7 @@ categories = ['Examples', 'Buttons', 'Labels', 'Galleries', 'More', 'Components'
 # Gather all existing versions and tags
 existing_versions = list(set(item['version'] for item in items))
 existing_tags = list(set(tag for item in items for tag in item.get('tags', [])))
-yaml_files = [f for f in os.listdir(ITEMS_DIR) if f.endswith('.yaml')]
+yaml_files = [f for f in os.listdir(ITEMS_DIR) if f.endswith('.yml')]
 
 if selected_index == -1:
     title = st.text_input('Title')
