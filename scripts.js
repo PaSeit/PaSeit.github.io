@@ -17,26 +17,28 @@ function toggleSubcategories(element) {
     }
 }
 
-async function copyToClipboard(yamlFile, element, isYAML = false) {
+async function copyToClipboard(content) {
     try {
-        const response = await fetch(yamlFile);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const content = await response.text();
-
         const tempTextarea = document.createElement("textarea");
         tempTextarea.value = content;
         document.body.appendChild(tempTextarea);
         tempTextarea.select();
         document.execCommand("copy");
         document.body.removeChild(tempTextarea);
+        console.log('Text copied to clipboard successfully');
+    } catch (err) {
+        console.error('Unable to copy text to clipboard', err);
+    }
+}
 
-        // Add the copied class to trigger the animation
-        element.classList.add("copied");
-        setTimeout(() => {
-            element.classList.remove("copied");
-        }, 1000); // Remove class after animation is complete
+async function fetchAndCopy(yamlFile) {
+    try {
+        const response = await fetch(yamlFile);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const content = await response.text();
+        copyToClipboard(content);
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }
@@ -113,8 +115,11 @@ function loadGallery(category = '', searchQuery = '', versionFilter = '', tagFil
         button.className = "copy-btn";
         button.textContent = "Copy";
         button.onclick = () => {
-            const isYAML = item.tags.includes('YAML');
-            copyToClipboard(isYAML ? item.yamlFile : item.codeFile, galleryItem, isYAML);
+            if (item.yamlFile) {
+                fetchAndCopy(item.yamlFile);
+            } else {
+                copyToClipboard(item.simpleCode);
+            }
         };
         
         const version = document.createElement("span");
