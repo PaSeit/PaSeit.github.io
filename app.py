@@ -65,6 +65,7 @@ if selected_index == -1:
     image_file = st.file_uploader('Choose an image...', type=['png', 'jpg', 'jpeg', 'svg'])
     description = st.text_input('Description', 'Color adjusts with theme' if 'Icon' in title else '')
     category = st.selectbox('Category', categories)
+    yaml_code = st.text_area('YAML Code')
     version = st.selectbox('Version', existing_versions + ['Add new version'])
     if version == 'Add new version':
         version = st.text_input('New Version')
@@ -78,7 +79,7 @@ else:
     title = st.text_input('Title', item['title'])
     description = st.text_input('Description', item['description'])
     category = st.selectbox('Category', categories, index=categories.index(item['category']))
-    yaml_code = st.text_input('YAML Code', item['yamlCode'])
+    yaml_code = st.text_area('YAML Code', item['yamlCode'])
     version = st.selectbox('Version', existing_versions + ['Add new version'], index=existing_versions.index(item.get('version', '')) if item.get('version', '') in existing_versions else -1)
     if version == 'Add new version':
         version = st.text_input('New Version')
