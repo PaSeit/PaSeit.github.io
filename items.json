@@ -10,5 +10,17 @@
             "YAML"
         ],
         "simpleCode": ""
+    },
+    {
+        "title": "Animated Search Bar",
+        "image": "images\\animated_search_input.svg",
+        "description": "Search bar with animated icon.",
+        "yamlFile": "Items\\animated_search_input.yml",
+        "category": "Components",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
     }
 ]
