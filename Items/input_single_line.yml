@@ -1,0 +1,77 @@
+- single_line_input_container:
+    Control: GroupContainer
+    Variant: verticalAutoLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.None
+      Height: =single_line_input_field.Y + single_line_input_field.Height + Self.PaddingBottom
+      LayoutAlignItems: =LayoutAlignItems.Stretch
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE
+      LayoutMode: =LayoutMode.Auto
+      PaddingBottom: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      PaddingLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      PaddingRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      RadiusBottomLeft: =0
+      RadiusBottomRight: =0
+      RadiusTopLeft: =0
+      RadiusTopRight: =0
+      Width: =227
+      X: =35
+      Y: =332
+    Children:
+    - single_line_title_label:
+        Control: Label
+        Properties:
+          Text: ="Input"
+          AutoHeight: =true
+          BorderColor: =RGBA(0, 0, 0, 0)
+          Color: =If(Len(single_line_input_field.Text) = 0, LookUp(THEMING,ID = THEME_MODE_ID).VALUES.INVALID, LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR)
+          DisabledBorderColor: =Self.BorderColor
+          DisabledColor: =Self.Color
+          DisabledFill: =Self.Fill
+          Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+          FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.DEFAULT
+          Height: =50
+          LayoutMinHeight: =70
+          LayoutMinWidth: =100
+          PaddingBottom: =0
+          PaddingLeft: =0
+          PaddingRight: =0
+          PaddingTop: =0
+          Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_SMALL
+          Width: =515
+    - single_line_input_field:
+        Control: Classic/TextInput
+        Properties:
+          Default: =
+          HintText: =
+          MaxLength: =35
+          BorderColor: =If(Len(Self.Text) = 0, LookUp(THEMING,ID = THEME_MODE_ID).VALUES.INVALID, LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BORDER_COLOR)
+          BorderThickness: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+          Color: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR
+          DisabledBorderColor: =Self.BorderColor
+          DisabledColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.DISABLED_COLOR
+          DisabledFill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.DISABLED_FILL
+          Fill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BK_LIGHTER
+          FocusedBorderThickness: =Self.BorderThickness
+          Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+          FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.DEFAULT
+          Height: |-
+            =LookUp(
+                THEMING,
+                ID = THEME_MODE_ID
+            ).VALUES.LAYOUT.INPUT_HEIGHT
+          HoverBorderColor: =Self.BorderColor
+          HoverColor: =Self.Color
+          HoverFill: =Self.Fill
+          LayoutMinWidth: =10
+          PaddingBottom: =0
+          PaddingLeft: =16
+          PaddingRight: =Self.PaddingLeft
+          PaddingTop: =0
+          PressedBorderColor: =Self.BorderColor
+          RadiusBottomLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusBottomRight: =Self.RadiusBottomLeft
+          RadiusTopLeft: =Self.RadiusBottomLeft
+          RadiusTopRight: =Self.RadiusBottomLeft
+          Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_SMALL

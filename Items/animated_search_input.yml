@@ -1,0 +1,73 @@
+- rounded_search_input_container:
+    Control: GroupContainer
+    Variant: horizontalAutoLayoutContainer
+    Properties:
+      BorderColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BORDER_COLOR
+      BorderThickness: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      DropShadow: =DropShadow.None
+      Fill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BK_INPUT
+      Height: |-
+        =LookUp(
+            THEMING,
+            ID = THEME_MODE_ID
+        ).VALUES.LAYOUT.INPUT_HEIGHT
+      LayoutAlignItems: =LayoutAlignItems.Center
+      LayoutGap: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE * 2
+      LayoutMode: =LayoutMode.Auto
+      PaddingBottom: =Self.PaddingTop
+      PaddingLeft: =16
+      RadiusBottomLeft: =Self.Height
+      RadiusBottomRight: =Self.Height
+      RadiusTopLeft: =Self.Height
+      RadiusTopRight: =Self.Height
+      Width: =250
+      X: =35
+      Y: =153
+    Children:
+    - animated_search_icon:
+        Control: Image
+        Properties:
+          Image: "=\"data:image/svg+xml;utf8,\" & EncodeUrl(\n    \"<svg xmlns=\"\"http://www.w3.org/2000/svg\"\" viewBox=\"\"0 -960 960 960\"\" fill=\"\"url(#text-gradient)\"\">\n    \n    <defs>\n        <linearGradient id=\"\"text-gradient\"\" x1=\"\"0%\"\" y1=\"\"0%\"\" x2=\"\"100%\"\" y2=\"\"0%\"\"> \n            <stop offset=\"\"0%\"\" stop-color=\"\"#F79533\"\">\n                <animate attributeName=\"\"stop-color\"\" values=\"\"#F79533; #F37055; #EF4E7B; #A166AB; #5073B8; #1098AD; #07B39B; #6DBA82; #F79533\"\" dur=\"\"4s\"\" repeatCount=\"\"indefinite\"\"></animate>\n            </stop>\n            <stop offset=\"\"100%\"\" stop-color=\"\"#F79533\"\">\n                <animate attributeName=\"\"stop-color\"\" values=\"\"#F37055; #EF4E7B; #A166AB; #5073B8; #1098AD; #07B39B; #6DBA82; #F79533; #F37055\"\" dur=\"\"4s\"\" repeatCount=\"\"indefinite\"\"></animate>\n            </stop>\n        </linearGradient>\n    </defs>\n    <path d=\"\" M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z \"\"/></svg>\"\n)"
+          BorderColor: =Color.Transparent
+          DisabledBorderColor: =Self.BorderColor
+          DisabledFill: =Self.Fill
+          Height: =Self.Width
+          HoverBorderColor: =Self.BorderColor
+          HoverFill: =Self.Fill
+          PressedBorderColor: =Self.HoverBorderColor
+          PressedFill: =Self.HoverFill
+          Width: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.ICON.SIZE_LARGE
+          X: =430
+          Y: =220
+    - animated_search_input_field:
+        Control: Classic/TextInput
+        Properties:
+          Default: =
+          HintText: ="Suche"
+          AlignInContainer: =AlignInContainer.Stretch
+          BorderColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BORDER_COLOR
+          BorderThickness: =0
+          Color: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR
+          DisabledBorderColor: =Self.BorderColor
+          DisabledColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.DISABLED_COLOR
+          DisabledFill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.DISABLED_FILL
+          Fill: =Color.Transparent
+          FillPortions: =1
+          FocusedBorderThickness: =Self.BorderThickness
+          Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+          FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.DEFAULT
+          HoverBorderColor: =Self.BorderColor
+          HoverColor: =Self.Color
+          HoverFill: =Self.Fill
+          LayoutMinWidth: =10
+          PaddingBottom: =0
+          PaddingLeft: =0
+          PaddingRight: |+
+            =0
+          PaddingTop: =0
+          PressedBorderColor: =Self.BorderColor
+          RadiusBottomLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusBottomRight: =Self.RadiusBottomLeft
+          RadiusTopLeft: =Self.RadiusBottomLeft
+          RadiusTopRight: =Self.RadiusBottomLeft
+          Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_TINY

@@ -1,0 +1,135 @@
+- item_gallery:
+    Control: Gallery
+    Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+    Properties:
+      DelayItemLoading: =true
+      Height: =466
+      Layout: =Layout.Vertical
+      LoadingSpinner: =LoadingSpinner.Data
+      TemplatePadding: |+
+        =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE
+      TemplateSize: =80
+      Width: =300
+      X: =425
+      Y: =235
+    Children:
+    - item_hitbox:
+        Control: Button
+        Properties:
+          OnSelect: =Select(Parent)
+          Appearance: ='ButtonCanvas.Appearance'.Transparent
+          Text: =" "
+          Height: =Parent.TemplateHeight
+          Width: =Parent.TemplateWidth
+    - content_container:
+        Control: GroupContainer
+        Variant: horizontalAutoLayoutContainer
+        Properties:
+          BorderColor: =If(ThisItem.IsSelected, LookUp(THEMING,ID = THEME_MODE_ID).VALUES.PRIMARY, LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BORDER_COLOR)
+          BorderThickness: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+          DropShadow: =DropShadow.None
+          Fill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BK_CONTAINER
+          Height: =Parent.TemplateHeight - Self.Y*2
+          LayoutGap: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE * 2
+          LayoutMode: =LayoutMode.Auto
+          PaddingLeft: =24
+          PaddingRight: =Self.PaddingLeft
+          RadiusBottomLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusBottomRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusTopLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusTopRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          Width: =Parent.TemplateWidth - Self.X*2
+          X: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+          Y: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+        Children:
+        - example_icon:
+            Control: Image
+            Properties:
+              Image: |-
+                ="data:image/svg+xml;utf8," & EncodeUrl(
+                    "<svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 -960 960 960"" fill='" & If(
+                        Self.DisplayMode = DisplayMode.Disabled,
+                        Substitute(
+                            JSON(
+                                LookUp(
+                                    THEMING,
+                                    ID = THEME_MODE_ID
+                                ).VALUES.DISABLED_COLOR
+                            ),
+                            Char(34),
+                            ""
+                        ),
+                        Substitute(
+                            JSON(
+                                If(
+                                    ThisItem.IsSelected,
+                                    LookUp(
+                                        THEMING,
+                                        ID = THEME_MODE_ID
+                                    ).VALUES.PRIMARY,
+                                    LookUp(
+                                        THEMING,
+                                        ID = THEME_MODE_ID
+                                    ).VALUES.ICON.COLOR
+                                )
+                            ),
+                            Char(34),
+                            ""
+                        )
+                    ) & "'" & "><path d=""
+                M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z
+                ""/></svg>"
+                )
+              AlignInContainer: =AlignInContainer.Center
+              Height: =LookUp(THEMING, ID = THEME_MODE_ID).VALUES.ICON.SIZE_DEFAULT
+              Width: =Self.Height
+        - information_content_container:
+            Control: GroupContainer
+            Variant: verticalAutoLayoutContainer
+            Properties:
+              DropShadow: =DropShadow.None
+              LayoutDirection: =LayoutDirection.Vertical
+              LayoutJustifyContent: =LayoutJustifyContent.Center
+              LayoutMinHeight: =10
+              LayoutMode: =LayoutMode.Auto
+              RadiusBottomLeft: =0
+              RadiusBottomRight: =0
+              RadiusTopLeft: =0
+              RadiusTopRight: =0
+            Children:
+            - item_title_label:
+                Control: Label
+                Properties:
+                  Text: ="Title"
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR
+                  DisabledBorderColor: =Self.BorderColor
+                  DisabledColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.DISABLED_COLOR
+                  DisabledFill: =Color.Transparent
+                  Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+                  FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.TITLE
+                  LayoutMinWidth: =10
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_DEFAULT
+            - item_subtitle_label:
+                Control: Label
+                Properties:
+                  Text: ="Subtitle"
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR
+                  DisabledBorderColor: =Self.BorderColor
+                  DisabledColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.DISABLED_COLOR
+                  DisabledFill: =Color.Transparent
+                  Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+                  FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.DEFAULT
+                  LayoutMinWidth: =10
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_TINY

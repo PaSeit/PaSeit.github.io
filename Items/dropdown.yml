@@ -1,0 +1,67 @@
+- modern_dropdown_container:
+    Control: GroupContainer
+    Variant: verticalAutoLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.None
+      Height: =modern_dropdown_field.Y + modern_dropdown_field.Height
+      LayoutAlignItems: =LayoutAlignItems.Stretch
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE
+      LayoutMode: =LayoutMode.Auto
+      PaddingBottom: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      PaddingLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      PaddingRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+      RadiusBottomLeft: =0
+      RadiusBottomRight: =0
+      RadiusTopLeft: =0
+      RadiusTopRight: =0
+      Width: =227
+      X: =35
+      Y: =235
+    Children:
+    - modern_dropdown_title:
+        Control: Label
+        Properties:
+          Text: ="Dropdown"
+          AutoHeight: =true
+          BorderColor: =RGBA(0, 0, 0, 0)
+          Color: |-
+            =If(
+                IsBlank(modern_dropdown_field.Selected),
+                LookUp(
+                    THEMING,
+                    ID = THEME_MODE_ID
+                ).VALUES.INVALID,
+                LookUp(
+                    THEMING,
+                    ID = THEME_MODE_ID
+                ).VALUES.FONT.COLOR
+            )
+          DisabledBorderColor: =Self.BorderColor
+          DisabledColor: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.DISABLED_COLOR
+          DisabledFill: =Self.Fill
+          Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+          FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.DEFAULT
+          Height: =50
+          PaddingBottom: =0
+          PaddingLeft: =0
+          PaddingRight: =0
+          PaddingTop: =0
+          Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_SMALL
+          Width: =515
+    - modern_dropdown_field:
+        Control: DropDown
+        Variant: pcfdataset
+        Properties:
+          Appearance: ='DropdownCanvas.Appearance'.FilledLighter
+          BasePaletteColor: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.PRIMARY
+          BorderColor: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.INVALID
+          BorderRadius: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          BorderThickness: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_SIZE
+          DefaultSelectedItems: =Blank()
+          Height: |-
+            =LookUp(
+                THEMING,
+                ID = THEME_MODE_ID
+            ).VALUES.LAYOUT.INPUT_HEIGHT
+          LayoutMinWidth: =10
