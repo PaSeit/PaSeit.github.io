@@ -26,6 +26,18 @@
         .navigate-button:hover {
             background-color: #0056b3;
         }
+        .gallery-item {
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .adsbygoogle {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +82,18 @@
             </div>
             <div class="gallery" id="gallery">
                 <!-- Gallery items will be injected here -->
+                <div class="gallery-item">
+                    <!-- Example Google Ad -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-9083993973318629"
+                        data-ad-slot="5092690055"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
             </div>
             <div id="noItemsMessage" class="no-items" style="display: none;">No items found for the selected filters.</div>
         </div>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Designer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        .sidebar {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar .label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .sidebar .input {
+            width: 100%;
+            height: 50px;
+            padding: 5px;
+            border-radius: 12px;
+            border: none;
+            box-sizing: border-box;
+        }
+        .sidebar .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .sidebar .row .input {
+            width: 32%;
+        }
+        .preview {
+            width: 50%;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #000000;
+            box-sizing: border-box;
+        }
+        .example-website {
+            padding: 20px;
+            background-color: inherit;
+            color: inherit;
+            border-radius: 12px;
+        }
+        .example-website h2 {
+            color: inherit;
+        }
+        .example-website p {
+            color: inherit;
+        }
+        .example-website .button {
+            padding: 10px;
+            background-color: inherit;
+            color: inherit;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .example-website .icon {
+            display: inline-block;
+            margin: 10px;
+            background-color: #ffffff;
+            text-align: center;
+            line-height: 1;
+        }
+        .example-website .container {
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 12px;
+        }
+        .example-website .canvas {
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Theme Designer</h1>
+        <input type="text" id="search" class="input" placeholder="Search for a variable..." oninput="filterVariables()">
+        <div id="variables">
+            <!-- Colors -->
+            <div class="row">
+                <label class="label">Valid Color</label>
+                <input type="color" id="validColor" class="input" value="#3d8550" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Invalid Color</label>
+                <input type="color" id="invalidColor" class="input" value="#df4949" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Primary Color</label>
+                <input type="color" id="primaryColor" class="input" value="#6159ff" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Primary Lighter Color</label>
+                <input type="color" id="primaryLighterColor" class="input" value="#6159ff" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Text Primary Color</label>
+                <input type="color" id="textPrimaryColor" class="input" value="#000000" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Background Container Color</label>
+                <input type="color" id="bgContainerColor" class="input" value="#f0f0f0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Background Input Color</label>
+                <input type="color" id="bgInputColor" class="input" value="#dcdcdc" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Disabled Fill Color</label>
+                <input type="color" id="disabledFillColor" class="input" value="#000000" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Disabled Color</label>
+                <input type="color" id="disabledColor" class="input" value="#969696" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Border Color</label>
+                <input type="color" id="borderColor" class="input" value="#d9d9d9" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Background Lighter Color</label>
+                <input type="color" id="bgLighterColor" class="input" value="#fafafa" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Background Darker Color</label>
+                <input type="color" id="bgDarkerColor" class="input" value="#e9e9f2" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Background Canvas Color</label>
+                <input type="color" id="bgCanvasColor" class="input" value="#ffffff" onchange="applyTheme()">
+            </div>
+            <!-- Icon -->
+            <div class="row">
+                <label class="label">Icon Size Small</label>
+                <input type="number" id="iconSizeSmall" class="input" value="12" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Icon Size Default</label>
+                <input type="number" id="iconSizeDefault" class="input" value="16" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Icon Size Large</label>
+                <input type="number" id="iconSizeLarge" class="input" value="24" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Icon Fill Color</label>
+                <input type="color" id="iconFillColor" class="input" value="#000000" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Icon Hover Fill Color</label>
+                <input type="color" id="iconHoverFillColor" class="input" value="#000000" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Icon Color</label>
+                <input type="color" id="iconColor" class="input" value="#2a2a2a" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Icon Hover Color</label>
+                <input type="color" id="iconHoverColor" class="input" value="#433bff" onchange="applyTheme()">
+            </div>
+            <!-- Button -->
+            <div class="row">
+                <label class="label">Button Border Size</label>
+                <input type="number" id="buttonBorderSize" class="input" value="2" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Button Fill Color</label>
+                <input type="color" id="buttonFillColor" class="input" value="#ffffff" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Button Hover Fill Color</label>
+                <input type="color" id="buttonHoverFillColor" class="input" value="#6159ff" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Button Hover Color</label>
+                <input type="color" id="buttonHoverColor" class="input" value="#ffffff" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Button Font Weight</label>
+                <input type="number" id="buttonFontWeight" class="input" value="700" min="100" max="900" step="100" onchange="applyTheme()">
+            </div>
+            <!-- Layout -->
+            <div class="row">
+                <label class="label">Spacing Baseline</label>
+                <input type="number" id="spacingBaseline" class="input" value="8" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Border Radius</label>
+                <input type="range" id="borderRadius" class="input" value="12" min="0" max="50" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Layout Border Size</label>
+                <input type="number" id="layoutBorderSize" class="input" value="2" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Input Height</label>
+                <input type="number" id="inputHeight" class="input" value="50" min="0" onchange="applyTheme()">
+            </div>
+            <!-- Font -->
+            <div class="row">
+                <label class="label">Font Color</label>
+                <input type="color" id="fontColor" class="input" value="#000000" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Secondary Font Color</label>
+                <input type="color" id="secondaryFontColor" class="input" value="#000000" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Type</label>
+                <input type="text" id="fontType" class="input" value="Bahnschrift" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Size Title</label>
+                <input type="number" id="fontSizeTitle" class="input" value="32" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Size Default</label>
+                <input type="number" id="fontSizeDefault" class="input" value="16" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Size Small</label>
+                <input type="number" id="fontSizeSmall" class="input" value="12" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Size Tiny</label>
+                <input type="number" id="fontSizeTiny" class="input" value="10" min="0" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Weight Title</label>
+                <input type="number" id="fontWeightTitle" class="input" value="700" min="100" max="900" step="100" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Weight Default</label>
+                <input type="number" id="fontWeightDefault" class="input" value="400" min="100" max="900" step="100" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Weight Small</label>
+                <input type="number" id="fontWeightSmall" class="input" value="300" min="100" max="900" step="100" onchange="applyTheme()">
+            </div>
+            <div class="row">
+                <label class="label">Font Weight Selected</label>
+                <input type="number" id="fontWeightSelected" class="input" value="700" min="100" max="900" step="100" onchange="applyTheme()">
+            </div>
+        </div>
+        <button class="button" onclick="copyTheme()">Copy Theme to Clipboard</button>
+    </div>
+    
+    <div class="preview" id="previewContainer">
+        <div class="example-website">
+            <h2>Example Website</h2>
+            <p>This is an example website to preview your theme design.</p>
+            <button class="button">Button</button>
+            <div class="icon" style="width: 12px; height: 12px;">S</div>
+            <div class="icon" style="width: 16px; height: 16px;">M</div>
+            <div class="icon" style="width: 24px; height: 24px;">L</div>
+        </div>
+        <div class="example-website">
+            <h2 class="title">Title Example</h2>
+            <p class="default-text">Default text size example.</p>
+            <div class="container" style="background-color: #f0f0f0;">Container Background Example</div>
+            <div class="canvas" style="background-color: #ffffff;">Canvas Background Example</div>
+            <div class="example-icons">
+                <div class="icon small">S</div>
+                <div class="icon default">M</div>
+                <div class="icon large">L</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function applyTheme() {
+            const theme = {
+                VALID: document.getElementById('validColor').value,
+                INVALID: document.getElementById('invalidColor').value,
+                PRIMARY: document.getElementById('primaryColor').value,
+                PRIMARY_LIGHTER: document.getElementById('primaryLighterColor').value,
+                TEXT_PRIMARY: document.getElementById('textPrimaryColor').value,
+                BK_CONTAINER: document.getElementById('bgContainerColor').value,
+                BK_INPUT: document.getElementById('bgInputColor').value,
+                DISABLED_FILL: document.getElementById('disabledFillColor').value,
+                DISABLED_COLOR: document.getElementById('disabledColor').value,
+                BORDER_COLOR: document.getElementById('borderColor').value,
+                BK_LIGHTER: document.getElementById('bgLighterColor').value,
+                BK_DARKER: document.getElementById('bgDarkerColor').value,
+                BK_CANVAS: document.getElementById('bgCanvasColor').value,
+                ICON: {
+                    SIZE_SMALL: document.getElementById('iconSizeSmall').value,
+                    SIZE_DEFAULT: document.getElementById('iconSizeDefault').value,
+                    SIZE_LARGE: document.getElementById('iconSizeLarge').value,
+                    FILL: document.getElementById('iconFillColor').value,
+                    HOVER_FILL: document.getElementById('iconHoverFillColor').value,
+                    COLOR: document.getElementById('iconColor').value,
+                    HOVER_COLOR: document.getElementById('iconHoverColor').value
+                },
+                BUTTON: {
+                    BORDER_SIZE: document.getElementById('buttonBorderSize').value,
+                    FILL: document.getElementById('buttonFillColor').value,
+                    HOVER_FILL: document.getElementById('buttonHoverFillColor').value,
+                    HOVER_COLOR: document.getElementById('buttonHoverColor').value,
+                    FONT: {
+                        WEIGHT: document.getElementById('buttonFontWeight').value
+                    }
+                },
+                LAYOUT: {
+                    SPACING_BASELINE: document.getElementById('spacingBaseline').value,
+                    BORDER_RADIUS: document.getElementById('borderRadius').value,
+                    BORDER_SIZE: document.getElementById('layoutBorderSize').value,
+                    INPUT_HEIGHT: document.getElementById('inputHeight').value
+                },
+                FONT: {
+                    COLOR: document.getElementById('fontColor').value,
+                    SECONDARY: document.getElementById('secondaryFontColor').value,
+                    TYPE: document.getElementById('fontType').value,
+                    SIZE_TITLE: document.getElementById('fontSizeTitle').value,
+                    SIZE_DEFAULT: document.getElementById('fontSizeDefault').value,
+                    SIZE_SMALL: document.getElementById('fontSizeSmall').value,
+                    SIZE_TINY: document.getElementById('fontSizeTiny').value,
+                    FONT_WEIGHT: {
+                        TITLE: document.getElementById('fontWeightTitle').value,
+                        DEFAULT: document.getElementById('fontWeightDefault').value,
+                        SMALL: document.getElementById('fontWeightSmall').value,
+                        SELECTED: document.getElementById('fontWeightSelected').value
+                    }
+                }
+            };
+
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.style.backgroundColor = theme.BK_CONTAINER;
+            previewContainer.style.color = theme.FONT.COLOR;
+
+            const exampleWebsite = document.querySelector('.example-website');
+            exampleWebsite.style.backgroundColor = theme.BK_CONTAINER;
+            exampleWebsite.style.color = theme.FONT.COLOR;
+            exampleWebsite.style.fontFamily = theme.FONT.TYPE;
+
+            const titles = exampleWebsite.querySelectorAll('.title');
+            titles.forEach(title => {
+                title.style.fontSize = theme.FONT.SIZE_TITLE + 'px';
+                title.style.fontWeight = theme.FONT_WEIGHT.TITLE;
+                title.style.color = theme.FONT.COLOR;
+            });
+
+            const defaultText = exampleWebsite.querySelectorAll('.default-text');
+            defaultText.forEach(text => {
+                text.style.fontSize = theme.FONT.SIZE_DEFAULT + 'px';
+                text.style.fontWeight = theme.FONT_WEIGHT.DEFAULT;
+                text.style.color = theme.FONT.COLOR;
+            });
+
+            const containers = exampleWebsite.querySelectorAll('.container');
+            containers.forEach(container => {
+                container.style.backgroundColor = theme.BK_CONTAINER;
+                container.style.color = theme.FONT.COLOR;
+                container.style.borderRadius = theme.LAYOUT.BORDER_RADIUS + 'px';
+            });
+
+            const canvases = exampleWebsite.querySelectorAll('.canvas');
+            canvases.forEach(canvas => {
+                canvas.style.backgroundColor = theme.BK_CANVAS;
+                canvas.style.color = theme.FONT.COLOR;
+                canvas.style.borderRadius = theme.LAYOUT.BORDER_RADIUS + 'px';
+            });
+
+            const buttons = exampleWebsite.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.style.backgroundColor = theme.BUTTON.FILL;
+                button.style.color = theme.FONT.COLOR;
+                button.style.borderWidth = theme.BUTTON.BORDER_SIZE + 'px';
+                button.style.fontWeight = theme.BUTTON.FONT.WEIGHT;
+                button.style.borderRadius = theme.LAYOUT.BORDER_RADIUS + 'px';
+                button.onmouseover = function() {
+                    this.style.backgroundColor = theme.BUTTON.HOVER_FILL;
+                    this.style.color = theme.BUTTON.HOVER_COLOR;
+                };
+                button.onmouseout = function() {
+                    this.style.backgroundColor = theme.BUTTON.FILL;
+                    this.style.color = theme.FONT.COLOR;
+                };
+            });
+
+            const icons = exampleWebsite.querySelectorAll('.icon');
+            icons.forEach((icon, index) => {
+                icon.style.backgroundColor = theme.ICON.FILL;
+                icon.style.color = theme.ICON.COLOR;
+                if (index === 0) icon.style.width = icon.style.height = theme.ICON.SIZE_SMALL + 'px';
+                if (index === 1) icon.style.width = icon.style.height = theme.ICON.SIZE_DEFAULT + 'px';
+                if (index === 2) icon.style.width = icon.style.height = theme.ICON.SIZE_LARGE + 'px';
+                icon.onmouseover = function() {
+                    this.style.backgroundColor = theme.ICON.HOVER_FILL;
+                    this.style.color = theme.ICON.HOVER_COLOR;
+                };
+                icon.onmouseout = function() {
+                    this.style.backgroundColor = theme.ICON.FILL;
+                    this.style.color = theme.ICON.COLOR;
+                };
+            });
+        }
+
+        function copyTheme() {
+            const theme = {
+                VALID: document.getElementById('validColor').value,
+                INVALID: document.getElementById('invalidColor').value,
+                PRIMARY: document.getElementById('primaryColor').value,
+                PRIMARY_LIGHTER: document.getElementById('primaryLighterColor').value,
+                TEXT_PRIMARY: document.getElementById('textPrimaryColor').value,
+                BK_CONTAINER: document.getElementById('bgContainerColor').value,
+                BK_INPUT: document.getElementById('bgInputColor').value,
+                DISABLED_FILL: document.getElementById('disabledFillColor').value,
+                DISABLED_COLOR: document.getElementById('disabledColor').value,
+                BORDER_COLOR: document.getElementById('borderColor').value,
+                BK_LIGHTER: document.getElementById('bgLighterColor').value,
+                BK_DARKER: document.getElementById('bgDarkerColor').value,
+                BK_CANVAS: document.getElementById('bgCanvasColor').value,
+                ICON: {
+                    SIZE_SMALL: document.getElementById('iconSizeSmall').value,
+                    SIZE_DEFAULT: document.getElementById('iconSizeDefault').value,
+                    SIZE_LARGE: document.getElementById('iconSizeLarge').value,
+                    FILL: document.getElementById('iconFillColor').value,
+                    HOVER_FILL: document.getElementById('iconHoverFillColor').value,
+                    COLOR: document.getElementById('iconColor').value,
+                    HOVER_COLOR: document.getElementById('iconHoverColor').value
+                },
+                BUTTON: {
+                    BORDER_SIZE: document.getElementById('buttonBorderSize').value,
+                    FILL: document.getElementById('buttonFillColor').value,
+                    HOVER_FILL: document.getElementById('buttonHoverFillColor').value,
+                    HOVER_COLOR: document.getElementById('buttonHoverColor').value,
+                    FONT: {
+                        WEIGHT: document.getElementById('buttonFontWeight').value
+                    }
+                },
+                LAYOUT: {
+                    SPACING_BASELINE: document.getElementById('spacingBaseline').value,
+                    BORDER_RADIUS: document.getElementById('borderRadius').value,
+                    BORDER_SIZE: document.getElementById('layoutBorderSize').value,
+                    INPUT_HEIGHT: document.getElementById('inputHeight').value
+                },
+                FONT: {
+                    COLOR: document.getElementById('fontColor').value,
+                    SECONDARY: document.getElementById('secondaryFontColor').value,
+                    TYPE: document.getElementById('fontType').value,
+                    SIZE_TITLE: document.getElementById('fontSizeTitle').value,
+                    SIZE_DEFAULT: document.getElementById('fontSizeDefault').value,
+                    SIZE_SMALL: document.getElementById('fontSizeSmall').value,
+                    SIZE_TINY: document.getElementById('fontSizeTiny').value,
+                    FONT_WEIGHT: {
+                        TITLE: document.getElementById('fontWeightTitle').value,
+                        DEFAULT: document.getElementById('fontWeightDefault').value,
+                        SMALL: document.getElementById('fontWeightSmall').value,
+                        SELECTED: document.getElementById('fontWeightSelected').value
+                    }
+                }
+            };
+
+            const themeString = JSON.stringify(theme);
+            navigator.clipboard.writeText(themeString)
+                .then(() => alert('Theme copied to clipboard'))
+                .catch(err => console.error('Error copying theme: ', err));
+        }
+
+        function filterVariables() {
+            const searchValue = document.getElementById('search').value.toLowerCase();
+            const rows = document.querySelectorAll('#variables .row');
+            rows.forEach(row => {
+                const label = row.querySelector('.label').textContent.toLowerCase();
+                row.style.display = label.includes(searchValue) ? 'flex' : 'none';
+            });
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', applyTheme);
+    </script>
+</body>
+</html>
