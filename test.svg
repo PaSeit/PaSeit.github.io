@@ -1,0 +1,63 @@
+<svg width="300" height="60" viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Define the glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Define the clipPath to restrict the glow inside the button -->
+    <clipPath id="button-clip">
+      <rect x="1" y="1" width="298" height="58" rx="29" ry="29"/>
+    </clipPath>
+  </defs>
+  <style>
+    @keyframes moveLight {
+      0% { stroke-dashoffset: -250; }
+    50% { stroke-dashoffset: -630; }
+      100% { stroke-dashoffset: -250; }
+    }
+
+    .button-border {
+      stroke: #FF4E50;
+      stroke-width: 2;
+      fill: transparent;
+      stroke-linecap: round;
+      stroke-dasharray: 28 2000;
+      animation: moveLight 6s ease-in-out infinite; /* Ease-in and ease-out */
+      filter: url(#glow); /* Apply the glow filter */
+      clip-path: url(#button-clip); /* Clip the glow to the button shape */
+    }
+
+    .button-background {
+      fill: #2E2E2E;
+      rx: 30;
+    }
+
+    .button-text {
+      fill: white;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+    }
+
+    .read-more {
+      fill: #bbbbbb;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+  </style>
+
+  <!-- Background of the button -->
+  <rect class="button-background" x="1" y="1" width="298" height="58" rx="29" ry="29"/>
+
+  <!-- Border with glowing effect inside the button -->
+  <rect class="button-border" x="1" y="1" width="298" height="58" rx="29" ry="29"/>
+
+  <!-- Button text -->
+  <text x="30" y="37" class="button-text">More AI models</text>
+  <text x="190" y="37" class="read-more">Read more →</text>
+</svg>
