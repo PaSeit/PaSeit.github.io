@@ -1,0 +1,93 @@
+- icon_action_container:
+    Control: GroupContainer
+    Variant: manualLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.None
+      Height: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.ICON.SIZE_LARGE
+      RadiusBottomLeft: =0
+      RadiusBottomRight: =0
+      RadiusTopLeft: =0
+      RadiusTopRight: =0
+      Width: =Self.Height
+      X: =395
+      Y: =175
+    Children:
+    - icon_hover_component:
+        Control: aln_OnHoverReactPCFAln.OnHover
+        Properties:
+          OnChange: =
+          ParentContainerId: |-
+            =//TODO change that to the parent container name!
+            "icon_action_container"
+          Height: =0
+          Width: =0
+    - icon_image:
+        Control: Image
+        Properties:
+          Image: |-
+            ="data:image/svg+xml;utf8," & EncodeUrl(
+                "<svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 -960 960 960"" fill='" & If(
+                    Self.DisplayMode = DisplayMode.Disabled,
+                    Substitute(
+                        JSON(
+                            LookUp(
+                                THEMING,
+                                ID = THEME_MODE_ID
+                            ).VALUES.DISABLED_COLOR
+                        ),
+                        Char(34),
+                        ""
+                    ),
+                    Substitute(
+                        JSON(
+                            If(
+                                icon_hover_component.IsHovered,
+                                LookUp(
+                                    THEMING,
+                                    ID = THEME_MODE_ID
+                                ).VALUES.PRIMARY,
+                                LookUp(
+                                    THEMING,
+                                    ID = THEME_MODE_ID
+                                ).VALUES.ICON.COLOR
+                            )
+                        ),
+                        Char(34),
+                        ""
+                    )
+                ) & "'" & "><path d=""
+            m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z
+            ""/></svg>"
+            )
+          Height: =Parent.Height
+          Width: =Parent.Width
+    - icon_action_button:
+        Control: Classic/Button
+        Properties:
+          OnSelect: |-
+            =If(
+                overlay_animation.Value = 1,
+                Reset(overlay_animation)
+            )
+          Text: =" "
+          Tooltip: ="Add Tooltip"
+          BorderColor: =Color.Transparent
+          BorderStyle: =BorderStyle.None
+          BorderThickness: =0
+          Color: =RGBA(0, 0, 0, 0)
+          DisabledBorderColor: =RGBA(0, 0, 0, 0)
+          DisabledColor: =RGBA(0, 0, 0, 0)
+          DisabledFill: =RGBA(0, 0, 0, 0)
+          Fill: =RGBA(0, 0, 0, 0)
+          Height: =24
+          HoverBorderColor: =Color.Transparent
+          HoverColor: =RGBA(0, 0, 0, 0)
+          HoverFill: =Color.Transparent
+          PaddingBottom: =0
+          PaddingLeft: =0
+          PaddingRight: =0
+          PaddingTop: =0
+          PressedBorderColor: =Color.Transparent
+          PressedColor: =Color.Transparent
+          PressedFill: =Color.Transparent
+          Width: =24

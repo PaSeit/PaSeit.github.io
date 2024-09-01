@@ -1,0 +1,12 @@
+- spacing_container:
+    Control: GroupContainer
+    Variant: manualLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.None
+      FillPortions: =0
+      Height: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE
+      LayoutMinWidth: =10
+      RadiusBottomLeft: =0
+      RadiusBottomRight: =0
+      RadiusTopLeft: =0
+      RadiusTopRight: =0

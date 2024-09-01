@@ -1,0 +1,213 @@
+- overlay_content_container:
+    Control: GroupContainer
+    Variant: manualLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.None
+      Height: =Parent.Height
+      RadiusBottomLeft: =0
+      RadiusBottomRight: =0
+      RadiusTopLeft: =0
+      RadiusTopRight: =0
+      Visible: =overlay_animation.Value > 0
+      Width: =Parent.Width
+    Children:
+    - overlay_background_color:
+        Control: HtmlViewer
+        Properties:
+          OnSelect: =
+          HtmlText: |-
+            ="<div style='width: " & Self.Width - 11 & "px; height: " & Self.Height - 11 & "px; background: " & Substitute(
+                JSON(
+                    add_alpha(
+                        LookUp(
+                            THEMING,
+                            ID = THEME_MODE_ID
+                        ).VALUES.BK_OVERLAY,
+                        Int(50 * overlay_animation.Value)
+                    )
+                ),
+                Char(34),
+                ""
+            ) & "; " & Substitute(
+                JSON(
+                    LookUp(
+                        THEMING,
+                        ID = THEME_MODE_ID
+                    ).VALUES.BK_CANVAS
+                ),
+                Char(34),
+                ""
+            ) & "); border-radius:0px;'></div>
+            "
+          BorderColor: =RGBA(0, 0, 0, 0)
+          Color: =RGBA(0, 0, 0, 0)
+          DisabledBorderColor: =RGBA(0, 0, 0, 0)
+          DisabledFill: =RGBA(0, 0, 0, 0)
+          Height: =Parent.Height + 11
+          PaddingBottom: =0
+          PaddingLeft: =0
+          PaddingRight: =0
+          PaddingTop: =0
+          Width: =Parent.Width + 11
+          X: |+
+            =0
+    - close_overlay_background_button:
+        Control: Button
+        Properties:
+          OnSelect: |-
+            =If(
+                overlay_animation.Value = 1,
+                Reset(overlay_animation)
+            )
+          Appearance: ='ButtonCanvas.Appearance'.Transparent
+          Text: =" "
+          Height: =Parent.Height
+          Width: =Parent.Width
+          X: |+
+            =0
+          Y: |+
+            =0
+    - overlay_centered_content_container:
+        Control: GroupContainer
+        Variant: verticalAutoLayoutContainer
+        Properties:
+          DropShadow: =DropShadow.None
+          Fill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BK_CONTAINER
+          Height: =Min(500, Parent.Height - 32)
+          LayoutDirection: =LayoutDirection.Vertical
+          LayoutGap: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE
+          LayoutMode: =LayoutMode.Auto
+          PaddingLeft: =Self.PaddingTop
+          PaddingRight: =Self.PaddingTop
+          PaddingTop: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE * 4
+          RadiusBottomLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusBottomRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusTopLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          RadiusTopRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+          Width: =350
+          X: =Parent.Width / 2 - Self.Width / 2
+          Y: =Parent.Height / 2 - Self.Height / 2 + Parent.Height * overlay_animation.NValue
+        Children:
+        - close_overlay_action_container:
+            Control: GroupContainer
+            Variant: manualLayoutContainer
+            Properties:
+              AlignInContainer: =AlignInContainer.End
+              DropShadow: =DropShadow.None
+              FillPortions: =0
+              Height: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.ICON.SIZE_LARGE
+              RadiusBottomLeft: =0
+              RadiusBottomRight: =0
+              RadiusTopLeft: =0
+              RadiusTopRight: =0
+              Width: =Self.Height
+            Children:
+            - exit_hover_component:
+                Control: aln_OnHoverReactPCFAln.OnHover
+                Properties:
+                  OnChange: =
+                  ParentContainerId: ="close_overlay_action_container"
+                  Height: =0
+                  Width: =0
+            - exit_icon:
+                Control: Image
+                Properties:
+                  Image: |-
+                    ="data:image/svg+xml;utf8," & EncodeUrl(
+                        "<svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 -960 960 960"" fill='" & If(
+                            Self.DisplayMode = DisplayMode.Disabled,
+                            Substitute(
+                                JSON(
+                                    LookUp(
+                                        THEMING,
+                                        ID = THEME_MODE_ID
+                                    ).VALUES.DISABLED_COLOR
+                                ),
+                                Char(34),
+                                ""
+                            ),
+                            Substitute(
+                                JSON(
+                                    If(
+                                        exit_hover_component.IsHovered,
+                                        LookUp(
+                                            THEMING,
+                                            ID = THEME_MODE_ID
+                                        ).VALUES.PRIMARY,
+                                        LookUp(
+                                            THEMING,
+                                            ID = THEME_MODE_ID
+                                        ).VALUES.ICON.COLOR
+                                    )
+                                ),
+                                Char(34),
+                                ""
+                            )
+                        ) & "'" & "><path d=""
+                    m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z
+                    ""/></svg>"
+                    )
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+            - exit_button:
+                Control: Classic/Button
+                Properties:
+                  OnSelect: |-
+                    =If(
+                        overlay_animation.Value = 1,
+                        Reset(overlay_animation)
+                    )
+                  Text: =" "
+                  Tooltip: ="Close overlay"
+                  BorderColor: =Color.Transparent
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =0
+                  Color: =RGBA(0, 0, 0, 0)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(0, 0, 0, 0)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  Fill: =RGBA(0, 0, 0, 0)
+                  Height: =24
+                  HoverBorderColor: =Color.Transparent
+                  HoverColor: =RGBA(0, 0, 0, 0)
+                  HoverFill: =Color.Transparent
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  PressedBorderColor: =Color.Transparent
+                  PressedColor: =Color.Transparent
+                  PressedFill: =Color.Transparent
+                  Width: =24
+        - spacing_container:
+            Control: GroupContainer
+            Variant: manualLayoutContainer
+            Properties:
+              DropShadow: =DropShadow.None
+              FillPortions: =0
+              Height: =LookUp(THEMING ,ID = THEME_MODE_ID).VALUES.LAYOUT.SPACING_BASELINE
+              LayoutMinWidth: =10
+              RadiusBottomLeft: =0
+              RadiusBottomRight: =0
+              RadiusTopLeft: =0
+              RadiusTopRight: =0
+        - title_label:
+            Control: Label
+            Properties:
+              Text: ="Title"
+              AlignInContainer: =AlignInContainer.Stretch
+              AutoHeight: =true
+              BorderColor: =RGBA(0, 0, 0, 0)
+              Color: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR
+              DisabledBorderColor: =Self.BorderColor
+              DisabledColor: =Self.Color
+              DisabledFill: =Self.Fill
+              Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+              FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.TITLE
+              LayoutMinWidth: =10
+              PaddingBottom: =0
+              PaddingLeft: =0
+              PaddingRight: =0
+              PaddingTop: =0
+              Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_DEFAULT
+              Width: =Parent.Width

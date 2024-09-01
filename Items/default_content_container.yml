@@ -1,0 +1,17 @@
+- default_content_container:
+    Control: GroupContainer
+    Variant: verticalAutoLayoutContainer
+    Properties:
+      BorderColor: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BORDER_COLOR
+      BorderThickness: =4
+      DropShadow: =DropShadow.Regular
+      Fill: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.BK_CONTAINER
+      Height: =Parent.Height - Self.Y*2
+      LayoutMode: =LayoutMode.Auto
+      RadiusBottomLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+      RadiusBottomRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+      RadiusTopLeft: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+      RadiusTopRight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.LAYOUT.BORDER_RADIUS
+      Width: =Parent.Width - Self.X*2
+      X: =16
+      Y: =Self.X

@@ -1,0 +1,19 @@
+- label_old:
+    Control: Label
+    Properties:
+      Text: ="Hinzufügen"
+      AutoHeight: =true
+      BorderColor: =RGBA(0, 0, 0, 0)
+      Color: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.COLOR
+      DisabledBorderColor: =Self.BorderColor
+      DisabledColor: =Self.Color
+      DisabledFill: =Self.Fill
+      Font: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.TYPE
+      FontWeight: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.FONT_WEIGHT.TITLE
+      LayoutMinWidth: =10
+      PaddingBottom: =0
+      PaddingLeft: =0
+      PaddingRight: =0
+      PaddingTop: =0
+      Size: =LookUp(THEMING,ID = THEME_MODE_ID).VALUES.FONT.SIZE_DEFAULT
+      Width: =Parent.Width

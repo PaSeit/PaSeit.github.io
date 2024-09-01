@@ -117,6 +117,78 @@
         "tags": [
             "COLLECTION"
         ],
-        "simpleCode": "Set(THEME_MODE_ID,1);ClearCollect(THEMING,{ID:0,NAME:\"DARK\",VALUES:{VALID:RGBA(61,133,80,1),INVALID:RGBA(223,73,73,1),PRIMARY:ColorValue(\"#e03f62\"),PRIMARY_LIGHTER:ColorFade(ColorValue(\"#e03f62\"),20%),TEXT_PRIMARY:RGBA(255,255,255,1),BK_CONTAINER:RGBA(19,19,19,1),BK_INPUT:RGBA(32,32,32,1),DISABLED_FILL:RGBA(0,0,0,0),DISABLED_COLOR:RGBA(150,150,150,1),BORDER_COLOR:RGBA(42,42,42,1),BK_LIGHTER:RGBA(50,50,50,1),BK_DARKER:RGBA(15,14,20,1),BK_CANVAS:RGBA(12,12,12,1),ICON:{SIZE_SMALL:12,SIZE_DEFAULT:16,SIZE_LARGE:24,FILL:RGBA(0,0,0,0),HOVER_FILL:RGBA(0,0,0,0),COLOR:RGBA(255,255,255,1),HOVER_COLOR:ColorValue(\"#e03f62\")},BUTTON:{BORDER_SIZE:0,FILL:RGBA(12,12,12,1),HOVER_FILL:ColorValue(\"#e03f62\"),HOVER_COLOR:ColorValue(\"#FFFFFF\"),FONT:{WEIGHT:FontWeight.Bold}},LAYOUT:{SPACING_BASELINE:8,BORDER_RADIUS:12,BORDER_SIZE:0,INPUT_HEIGHT:50},FONT:{COLOR:RGBA(255,255,255,1),SECONDARY:RGBA(255,255,255,0.44),TYPE:\"Bauhaus 93\",SIZE_TITLE:32,SIZE_DEFAULT:16,SIZE_SMALL:12,SIZE_TINY:10,FONT_WEIGHT:{TITLE:FontWeight.Bold,DEFAULT:FontWeight.Normal,SMALL:FontWeight.Lighter,SELECTED:FontWeight.Bold}}}},{ID:1,NAME:\"LIGHT\",VALUES:{VALID:RGBA(61,133,80,1),INVALID:RGBA(223,73,73,1),PRIMARY:RGBA(97,89,255,1),PRIMARY_LIGHTER:RGBA(97,89,255,1),TEXT_PRIMARY:RGBA(255,255,255,1),BK_CONTAINER:RGBA(240,240,240,1),BK_INPUT:RGBA(220,220,220,1),DISABLED_FILL:RGBA(0,0,0,0),DISABLED_COLOR:RGBA(150,150,150,1),BORDER_COLOR:RGBA(0,0,0,0.05),BK_LIGHTER:RGBA(250,250,250,1),BK_DARKER:RGBA(233,233,242,1),BK_CANVAS:RGBA(255,255,255,1),ICON:{SIZE_SMALL:12,SIZE_DEFAULT:16,SIZE_LARGE:24,FILL:RGBA(0,0,0,0),HOVER_FILL:RGBA(0,0,0,0),COLOR:RGBA(42,42,42,1),HOVER_COLOR:RGBA(67,59,255,1)},BUTTON:{FILL:RGBA(255,255,255,1),BORDER_SIZE:2,HOVER_FILL:RGBA(97,89,255,1),HOVER_COLOR:RGBA(255,255,255,1),FONT:{WEIGHT:FontWeight.Bold}},LAYOUT:{SPACING_BASELINE:8,BORDER_RADIUS:12,BORDER_SIZE:2,INPUT_HEIGHT:50},FONT:{COLOR:RGBA(0,0,0,1),SECONDARY:RGBA(0,0,0,0.55),TYPE:\"Bahnschrift\",SIZE_TITLE:32,SIZE_DEFAULT:16,SIZE_SMALL:12,SIZE_TINY:10,FONT_WEIGHT:{TITLE:FontWeight.Bold,DEFAULT:FontWeight.Normal,SMALL:FontWeight.Lighter,SELECTED:FontWeight.Bold}}}})"
+        "simpleCode": "Set( THEME_MODE_ID, 1 ); ClearCollect( THEMING, { ID: 0, NAME: \"DARK\", VALUES: { BK_OVERLAY: RGBA( 255, 255, 255, 0.5 ), BK_SCREEN: RGBA( 72, 72, 82, 1 ), VALID: RGBA( 61, 133, 80, 1 ), INVALID: RGBA( 223, 73, 73, 1 ), PRIMARY: ColorValue(\"#e1242a\"), PRIMARY_LIGHTER: ColorFade( ColorValue(\"#e1242a\"), 20% ), TEXT_PRIMARY: RGBA( 255, 255, 255, 1 ), BK_CONTAINER: RGBA( 19, 19, 19, 1 ), BK_INPUT: RGBA( 32, 32, 32, 1 ), DISABLED_FILL: RGBA( 0, 0, 0, 0 ), DISABLED_COLOR: RGBA( 150, 150, 150, 1 ), BORDER_COLOR: RGBA( 42, 42, 42, 0.2 ), BK_LIGHTER: RGBA( 50, 50, 50, 1 ), BK_DARKER: RGBA( 15, 14, 20, 1 ), BK_CANVAS: RGBA( 12, 12, 12, 1 ), ICON: { SIZE_SMALL: 12, SIZE_DEFAULT: 16, SIZE_LARGE: 24, FILL: RGBA( 0, 0, 0, 0 ), HOVER_FILL: RGBA( 0, 0, 0, 0 ), COLOR: RGBA( 255, 255, 255, 1 ), HOVER_COLOR: ColorValue(\"#e1242a\") }, BUTTON: { BORDER_SIZE: 0, FILL: RGBA( 12, 12, 12, 1 ), HOVER_FILL: ColorValue(\"#e1242a\"), HOVER_COLOR: ColorValue(\"#FFFFFF\"), FONT: {WEIGHT: FontWeight.Bold} }, LAYOUT: { SPACING_BASELINE: 8, BORDER_RADIUS: 12, BORDER_SIZE: 0, INPUT_HEIGHT: 42 }, FONT: { COLOR: RGBA( 255, 255, 255, 1 ), SECONDARY: RGBA( 255, 255, 255, 0.44 ), TYPE: \"Bauhaus 93\", SIZE_TITLE: 22, SIZE_DEFAULT: 14, SIZE_SMALL: 11, SIZE_TINY: 9, FONT_WEIGHT: { TITLE: FontWeight.Bold, DEFAULT: FontWeight.Normal, SMALL: FontWeight.Lighter, SELECTED: FontWeight.Bold } } } }, { ID: 1, NAME: \"LIGHT\", VALUES: { BK_OVERLAY: RGBA( 0, 0, 0, 0.5 ), BK_SCREEN: RGBA( 163, 163, 163, 1 ), VALID: RGBA( 61, 133, 80, 1 ), INVALID: RGBA( 223, 73, 73, 1 ), PRIMARY: ColorValue(\"#e1242a\"), PRIMARY_LIGHTER: ColorFade( ColorValue(\"#e1242a\"), 20% ), TEXT_PRIMARY: RGBA( 255, 255, 255, 1 ), BK_CONTAINER: RGBA( 240, 240, 240, 1 ), BK_INPUT: RGBA( 220, 220, 220, 1 ), DISABLED_FILL: RGBA( 0, 0, 0, 0 ), DISABLED_COLOR: RGBA( 150, 150, 150, 1 ), BORDER_COLOR: RGBA( 0, 0, 0, 0.05 ), BK_LIGHTER: RGBA( 250, 250, 250, 1 ), BK_DARKER: RGBA( 233, 233, 242, 1 ), BK_CANVAS: RGBA( 255, 255, 255, 1 ), ICON: { SIZE_SMALL: 12, SIZE_DEFAULT: 16, SIZE_LARGE: 24, FILL: RGBA( 0, 0, 0, 0 ), HOVER_FILL: RGBA( 0, 0, 0, 0 ), COLOR: RGBA( 0, 0, 0, 1 ), HOVER_COLOR: RGBA( 67, 59, 255, 1 ) }, BUTTON: { FILL: RGBA( 255, 255, 255, 1 ), BORDER_SIZE: 0, HOVER_FILL: ColorValue(\"#e1242a\"), HOVER_COLOR: RGBA( 255, 255, 255, 1 ), FONT: {WEIGHT: FontWeight.Bold} }, LAYOUT: { SPACING_BASELINE: 8, BORDER_RADIUS: 13, BORDER_SIZE: 0, INPUT_HEIGHT: 42 }, FONT: { COLOR: RGBA( 0, 0, 0, 1 ), SECONDARY: RGBA( 0, 0, 0, 0.55 ), TYPE: \"Bahnschrift\", SIZE_TITLE: 24, SIZE_DEFAULT: 13, SIZE_SMALL: 10, SIZE_TINY: 8, FONT_WEIGHT: { TITLE: FontWeight.Bold, DEFAULT: FontWeight.Normal, SMALL: FontWeight.Lighter, SELECTED: FontWeight.Bold } } } } );"
+    },
+    {
+        "title": "Default Screen Layout.",
+        "image": "images\\comming_soon.svg",
+        "description": "Default Screen Layout.",
+        "yamlFile": "Items\\default_content_container.yml",
+        "category": "More",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Label (Classic)",
+        "image": "images\\comming_soon.svg",
+        "description": "Classic Control Label.",
+        "yamlFile": "Items\\label_old.yml",
+        "category": "Labels",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Spacing Container",
+        "image": "images\\comming_soon.svg",
+        "description": "A Simple Spacing Container.",
+        "yamlFile": "Items\\spacing_container.yml",
+        "category": "More",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Overlay Blueprint.",
+        "image": "images\\comming_soon.svg",
+        "description": "Blueprint for a simple overlay. You need to add an animation component.",
+        "yamlFile": "Items\\overlay.yml",
+        "category": "More",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Hover Icon",
+        "image": "images\\comming_soon.svg",
+        "description": "Hover Icon Container. You need the hover PCF.",
+        "yamlFile": "Items\\hover_icon.yml",
+        "category": "More",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
+    },
+    {
+        "title": "Default Vertical Dynamic Container",
+        "image": "images\\comming_soon.svg",
+        "description": "A default vertical container.",
+        "yamlFile": "Items\\vertical_dynamic_container.yml",
+        "category": "More",
+        "version": "1.0",
+        "tags": [
+            "YAML"
+        ],
+        "simpleCode": ""
     }
 ]
